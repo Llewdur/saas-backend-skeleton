@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Core\Application\DTOs;
 
-use App\Modules\Core\Http\Requests\UpdateProjectRequest;
-
 /**
- * Sparse update payload. Fields are only present if the request included them.
+ * Sparse update payload. Fields are only present if the caller included them.
  * Per coding standards §14: never null an unchanged field.
  */
 final readonly class ProjectChanges
@@ -19,15 +17,21 @@ final readonly class ProjectChanges
         public bool $descriptionChanged,
     ) {}
 
-    public static function fromRequest(UpdateProjectRequest $request): self
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public static function fromArray(array $data): self
     {
+        $nameChanged = array_key_exists('name', $data);
+        $descriptionChanged = array_key_exists('description', $data);
+
         return new self(
-            name: $request->has('name') ? $request->string('name')->toString() : null,
-            description: $request->has('description') && $request->filled('description')
-                ? $request->string('description')->toString()
+            name: $nameChanged ? (string) $data['name'] : null,
+            description: $descriptionChanged && $data['description'] !== null && $data['description'] !== ''
+                ? (string) $data['description']
                 : null,
-            nameChanged: $request->has('name'),
-            descriptionChanged: $request->has('description'),
+            nameChanged: $nameChanged,
+            descriptionChanged: $descriptionChanged,
         );
     }
 

@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Modules\Tenant\Domain\Enums\Role;
 use App\Modules\Tenant\Domain\Models\Membership;
 use App\Modules\Tenant\Domain\Models\Tenant;
-use App\Modules\Tenant\Infrastructure\Persistence\TenantContext;
+use App\Modules\Tenant\Domain\TenantContext;
 
 it('binds the tenant from X-Tenant header by slug', function (): void {
     $tenant = Tenant::factory()->create(['slug' => 'acme']);

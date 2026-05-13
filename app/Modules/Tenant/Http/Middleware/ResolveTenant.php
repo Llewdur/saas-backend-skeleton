@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Tenant\Http\Middleware;
 
 use App\Modules\Tenant\Domain\Models\Tenant;
-use App\Modules\Tenant\Infrastructure\Persistence\TenantContext;
+use App\Modules\Tenant\Domain\TenantContext;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;

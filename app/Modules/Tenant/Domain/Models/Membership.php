@@ -6,8 +6,8 @@ namespace App\Modules\Tenant\Domain\Models;
 
 use App\Models\User;
 use App\Modules\Tenant\Database\Factories\MembershipFactory;
+use App\Modules\Tenant\Domain\Concerns\BelongsToTenant;
 use App\Modules\Tenant\Domain\Enums\Role;
-use App\Modules\Tenant\Infrastructure\Persistence\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

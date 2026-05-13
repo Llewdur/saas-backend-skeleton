@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Tenant;
 
+use App\Modules\Tenant\Domain\TenantContext;
 use App\Modules\Tenant\Http\Middleware\EnsureTenantContext;
 use App\Modules\Tenant\Http\Middleware\ResolveTenant;
-use App\Modules\Tenant\Infrastructure\Persistence\TenantContext;
 use App\Support\ModuleServiceProvider;
 use Illuminate\Routing\Router;
 

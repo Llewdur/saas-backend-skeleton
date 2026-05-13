@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Tenant\Infrastructure\Persistence;
+namespace App\Modules\Tenant\Domain\Concerns;
 
+use App\Modules\Tenant\Domain\Exceptions\CrossTenantAccessAttempted;
 use App\Modules\Tenant\Domain\Models\Tenant;
+use App\Modules\Tenant\Domain\TenantContext;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,11 +14,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * Trait for tenant-owned Eloquent models.
  *
- * Adds: global scope filtering by current tenant, auto-fill of tenant_id on
- * create, and a tenant() relationship. The current tenant comes from the
- * container-bound TenantContext singleton.
+ * Three independent enforcement points:
+ *   1. Global scope: every query filters by current tenant_id (when a tenant
+ *      context exists).
+ *   2. `creating` hook: auto-fills tenant_id from context when not supplied —
+ *      paired with $fillable excluding tenant_id, this prevents a request
+ *      payload from setting a foreign tenant_id.
+ *   3. `updating` hook: tenant_id is immutable once set. A row cannot migrate
+ *      across tenants under any circumstance.
  *
- * Models using this trait MUST have a `tenant_id` column.
+ * Models using this trait MUST have a `tenant_id` column AND MUST exclude
+ * `tenant_id` from $fillable.
  */
 trait BelongsToTenant
 {
@@ -38,6 +46,17 @@ trait BelongsToTenant
             if ($context->has()) {
                 $model->setAttribute('tenant_id', $context->id());
             }
+        });
+
+        static::updating(function (Model $model): void {
+            if (! $model->isDirty('tenant_id')) {
+                return;
+            }
+
+            $original = (int) $model->getOriginal('tenant_id');
+            $new = (int) $model->getAttribute('tenant_id');
+
+            throw CrossTenantAccessAttempted::with($original, $new);
         });
     }
 

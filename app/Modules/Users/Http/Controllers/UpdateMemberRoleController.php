@@ -26,7 +26,7 @@ final class UpdateMemberRoleController
         try {
             $updated = $useCase->execute(
                 $user,
-                UpdateMemberRoleInput::fromRequest($request, $membership),
+                UpdateMemberRoleInput::fromArray($membership, $request->validated()),
             );
         } catch (InsufficientRole $e) {
             return new JsonResponse([

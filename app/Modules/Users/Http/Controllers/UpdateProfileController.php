@@ -17,7 +17,7 @@ final class UpdateProfileController
     {
         /** @var User $user */
         $user = $request->user();
-        $updated = $useCase->execute($user, UpdateProfileInput::fromRequest($request));
+        $updated = $useCase->execute($user, UpdateProfileInput::fromArray($request->validated()));
 
         return UserResource::make($updated)->response();
     }

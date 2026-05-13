@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Tenant\Http\Middleware;
 
-use App\Modules\Tenant\Infrastructure\Persistence\TenantContext;
+use App\Modules\Tenant\Domain\TenantContext;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

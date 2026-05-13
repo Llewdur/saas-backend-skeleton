@@ -14,7 +14,7 @@ final class RegisterController
 {
     public function __invoke(RegisterRequest $request, RegisterUser $useCase): JsonResponse
     {
-        $user = $useCase->execute(RegisterUserInput::fromRequest($request));
+        $user = $useCase->execute(RegisterUserInput::fromArray($request->validated()));
 
         return UserResource::make($user)->response()->setStatusCode(201);
     }

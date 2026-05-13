@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Tenant\Infrastructure\Persistence;
+namespace App\Modules\Tenant\Domain;
 
 use App\Modules\Tenant\Domain\Exceptions\TenantContextMissing;
 use App\Modules\Tenant\Domain\Models\Tenant;

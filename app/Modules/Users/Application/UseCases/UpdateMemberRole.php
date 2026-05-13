@@ -7,7 +7,7 @@ namespace App\Modules\Users\Application\UseCases;
 use App\Models\User;
 use App\Modules\Tenant\Domain\Enums\Role;
 use App\Modules\Tenant\Domain\Models\Membership;
-use App\Modules\Tenant\Infrastructure\Persistence\TenantContext;
+use App\Modules\Tenant\Domain\TenantContext;
 use App\Modules\Users\Application\DTOs\UpdateMemberRoleInput;
 use App\Modules\Users\Domain\Exceptions\CannotDemoteLastOwner;
 use App\Modules\Users\Domain\Exceptions\InsufficientRole;

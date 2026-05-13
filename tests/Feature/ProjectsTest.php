@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\User;
 use App\Modules\Core\Domain\Models\Project;
 use App\Modules\Tenant\Domain\Enums\Role;
+use App\Modules\Tenant\Domain\Exceptions\CrossTenantAccessAttempted;
 use App\Modules\Tenant\Domain\Models\Membership;
 use App\Modules\Tenant\Domain\Models\Tenant;
 
@@ -132,4 +133,16 @@ it('blocks forged tenant_id in the request payload', function (): void {
         ->firstOrFail();
 
     expect($project->tenant_id)->toBe($tenantA->id);
+});
+
+it('rejects mutating a project tenant_id after creation (row migration)', function (): void {
+    $tenantA = Tenant::factory()->create();
+    $tenantB = Tenant::factory()->create();
+    $project = Project::factory()->create(['tenant_id' => $tenantA->id]);
+
+    $project->tenant_id = $tenantB->id;
+
+    expect(fn () => $project->save())->toThrow(CrossTenantAccessAttempted::class);
+
+    expect(Project::withoutGlobalScopes()->find($project->id)->tenant_id)->toBe($tenantA->id);
 });

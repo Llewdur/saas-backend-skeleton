@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Modules\Users\Application\DTOs;
 
-use App\Modules\Users\Http\Requests\UpdateProfileRequest;
-
 final readonly class UpdateProfileInput
 {
     public function __construct(
@@ -13,11 +11,14 @@ final readonly class UpdateProfileInput
         public ?string $email,
     ) {}
 
-    public static function fromRequest(UpdateProfileRequest $request): self
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public static function fromArray(array $data): self
     {
         return new self(
-            name: $request->has('name') ? $request->string('name')->toString() : null,
-            email: $request->has('email') ? $request->string('email')->toString() : null,
+            name: array_key_exists('name', $data) ? (string) $data['name'] : null,
+            email: array_key_exists('email', $data) ? (string) $data['email'] : null,
         );
     }
 }

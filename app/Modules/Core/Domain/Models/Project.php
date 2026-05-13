@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Core\Domain\Models;
 
 use App\Modules\Core\Database\Factories\ProjectFactory;
-use App\Modules\Tenant\Infrastructure\Persistence\BelongsToTenant;
+use App\Modules\Tenant\Domain\Concerns\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
