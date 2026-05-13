@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Modules\Users\Application\DTOs;
 
 use App\Modules\Tenant\Domain\Enums\Role;
-use App\Modules\Users\Http\Requests\UpdateMemberRoleRequest;
 
 final readonly class UpdateMemberRoleInput
 {
@@ -14,11 +13,14 @@ final readonly class UpdateMemberRoleInput
         public Role $role,
     ) {}
 
-    public static function fromRequest(UpdateMemberRoleRequest $request, int $membershipId): self
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public static function fromArray(int $membershipId, array $data): self
     {
         return new self(
             membershipId: $membershipId,
-            role: Role::from($request->string('role')->toString()),
+            role: Role::from((string) ($data['role'] ?? '')),
         );
     }
 }

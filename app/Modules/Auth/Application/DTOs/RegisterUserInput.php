@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Modules\Auth\Application\DTOs;
 
-use App\Modules\Auth\Http\Requests\RegisterRequest;
-
 final readonly class RegisterUserInput
 {
     public function __construct(
@@ -15,13 +13,16 @@ final readonly class RegisterUserInput
         public string $tenantName,
     ) {}
 
-    public static function fromRequest(RegisterRequest $request): self
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public static function fromArray(array $data): self
     {
         return new self(
-            name: $request->string('name')->toString(),
-            email: $request->string('email')->toString(),
-            password: $request->string('password')->toString(),
-            tenantName: $request->string('tenant_name')->toString(),
+            name: (string) ($data['name'] ?? ''),
+            email: (string) ($data['email'] ?? ''),
+            password: (string) ($data['password'] ?? ''),
+            tenantName: (string) ($data['tenant_name'] ?? ''),
         );
     }
 }

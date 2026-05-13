@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Modules\Tenant\Domain\Exceptions;
 
+use App\Modules\Tenant\Domain\ValueObjects\TenantId;
 use DomainException;
 
 final class CrossTenantAccessAttempted extends DomainException
 {
-    public static function with(int $currentTenantId, int $resourceTenantId): self
+    public static function with(TenantId $current, TenantId $resource): self
     {
         return new self(
-            "Tenant {$currentTenantId} attempted to access resource owned by tenant {$resourceTenantId}."
+            "Tenant {$current} attempted to access resource owned by tenant {$resource}."
         );
     }
 }

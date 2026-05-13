@@ -184,14 +184,21 @@ final readonly class RegisterUserInput
 ## 6. Value Objects
 
 **Rule:** a value object exists when a primitive has *rules*. Use one if:
-- It can be invalid (`Email`, `Slug`, `Money`).
+- It can be invalid (`Email`, `Slug`, `Money`) — validate in the constructor; an instance that exists is valid by definition.
 - It has behavior (`Money::add()`, `Slug::matches()`).
-- It's an ID that crosses module boundaries (`TenantId`, `UserId`, `MembershipId`).
-- It appears in 3+ places and you want refactors to be safe.
+- It crosses a module boundary as a *bare* value (not as a property of a model that's already passed).
+- It appears in 3+ places where confusing it with a similar-typed value would be a real bug.
 
-Do **not** wrap every primitive. `string $name` is fine. `Slug $slug` is not.
+Do **not** wrap every primitive. `string $name` is fine. `Slug $slug` is not. Do **not** create a VO that no method or DTO actually receives as a typed parameter — that's decoration, and the architect agent will catch it (so will the next reviewer).
 
-**Typed IDs.** Every aggregate ID gets a value object — `TenantId`, `UserId`, `ProjectId`. Pass `TenantId $tenantId` across module boundaries, not `int $tenantId`. Eliminates "wrong ID type passed to wrong function" at compile time.
+**Typed IDs — only where they cross a boundary as a bare value.** Most of this codebase passes the full Eloquent model across boundaries (`User`, `Tenant`, `Project`), so an `int $id` rarely travels alone. The exception is `TenantContext`, which exposes the current tenant's id to consumers that *don't* hold the `Tenant` model — multiple modules, multiple call sites. So:
+
+- ✅ `TenantId` — used as the return type of `Tenant::tenantId()` and `TenantContext::tenantId()`, and as the parameter type on `CrossTenantAccessAttempted::with()`. Genuine boundary crossings.
+- ❌ `UserId`, `MembershipId`, `ProjectId` — would be decoration in this codebase. Every place that would receive them already receives the full model. **Add one only when a new use case actually receives the bare id as a parameter.**
+
+`TenantContext` exposes both methods deliberately:
+- `tenantId(): TenantId` — for domain code and module-boundary calls (preferred).
+- `id(): int` — for framework touchpoints (query builders, route binding) that need the raw int. Returns `$this->tenantId()->value`.
 
 ```php
 <?php
@@ -378,6 +385,88 @@ final class EloquentTenantRepository implements TenantRepository
 - Repositories that return query builders.
 - A repository per model, mechanically. Repositories per *aggregate*, when justified.
 - A service method that just proxies to a single repository method. Call the repo directly.
+
+---
+
+## 9a. Factories (creation pattern, not Laravel test factories)
+
+**Distinct from §9 repositories** — repositories are about *retrieval and persistence of existing entities*; factories are about *creating new aggregates*. The two patterns coexist: a use case may call a factory to create and a repository to read.
+
+**Use a factory interface when at least one is true:**
+1. Creating a row requires multiple writes that must hold together (user + tenant + membership).
+2. Creation has non-trivial logic (slug generation, password hashing, default-value derivation) that doesn't belong on the model.
+3. You want to fake creation in a use-case test without booting Eloquent.
+4. Multiple use cases create the same aggregate and you don't want the logic duplicated.
+
+**Don't add a factory for a single `Model::create([...])` — that's exactly the §9 "Eloquent with extra steps" anti-pattern restated.**
+
+**Naming and location:**
+- Interface in `<Module>/Domain/Factories/<Name>Factory.php`.
+- Implementation in `<Module>/Infrastructure/Factories/Eloquent<Name>Factory.php` (prefixed `Eloquent`, mirroring the repository convention).
+- Factory name describes the *aggregate* it produces (`TenantOwnerFactory`, `InvitationFactory`), not the act of creating (`CreateTenantOwner` — that's the use case's job).
+- Return type: a result DTO if it creates multiple entities (`TenantOwnerCreated`), or the single created model otherwise.
+- Bind in the module's `ServiceProvider` (`public array $bindings`).
+
+**Difference from use cases:**
+
+| | Factory | Use Case |
+|---|---|---|
+| Owns | Writes | Orchestration (transactions, events, authorization checks, calling factories + repositories) |
+| Touches Eloquent | Yes (the only place that does, in this convention) | No — calls the factory |
+| Returns | The created aggregate (model or result DTO) | A domain model, often the same one the factory returned |
+| Throws | Persistence errors only | Domain exceptions (`InsufficientRole`, `TenantSlugTaken`) |
+
+```php
+// Domain — the contract
+interface TenantOwnerFactory
+{
+    public function create(RegisterUserInput $input): TenantOwnerCreated;
+}
+
+// Infrastructure — Eloquent implementation; the use case never sees these calls
+final class EloquentTenantOwnerFactory implements TenantOwnerFactory
+{
+    public function create(RegisterUserInput $input): TenantOwnerCreated
+    {
+        $user = new User();
+        $user->name = $input->name;
+        // ...
+        $user->save();
+
+        $tenant = /* ... */;
+        $membership = /* ... — attribute access, not mass-assign, because tenant_id is not fillable */;
+
+        return new TenantOwnerCreated($user, $tenant, $membership);
+    }
+}
+
+// Application — the use case orchestrates, never imports Eloquent
+final class RegisterUser
+{
+    public function __construct(
+        private readonly DatabaseManager $db,
+        private readonly Dispatcher $events,
+        private readonly TenantOwnerFactory $factory,
+    ) {}
+
+    public function execute(RegisterUserInput $input): User
+    {
+        return $this->db->transaction(function () use ($input): User {
+            $created = $this->factory->create($input);
+            $this->events->dispatch(new TenantCreated($created->tenant));
+            $this->events->dispatch(new UserRegistered($created->user, $created->tenant));
+
+            return $created->user;
+        });
+    }
+}
+```
+
+**Anti-patterns to reject:**
+- A factory that wraps a single `Model::create(...)` with no other writes, no validation, no derivation. Use the model directly.
+- A factory that holds a transaction. Transactions are the use case's responsibility (so the use case can orchestrate factory + events + other writes atomically).
+- A factory that dispatches events. Same reason — events belong to the use case so it controls ordering and post-commit semantics.
+- Using the term "factory" to mean a Laravel test factory (`Database/Factories/`) — those are unrelated. Reserve "factory" in domain code for the creation pattern.
 
 ---
 

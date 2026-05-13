@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Audit\Http\Controllers;
 
-use App\Modules\Tenant\Infrastructure\Persistence\TenantContext;
+use App\Modules\Tenant\Domain\TenantContext;
 use Illuminate\Http\JsonResponse;
 use Spatie\Activitylog\Models\Activity;
 

@@ -16,7 +16,7 @@ final class LoginController
     public function __invoke(LoginRequest $request, LoginUser $useCase): JsonResponse
     {
         try {
-            $result = $useCase->execute(LoginInput::fromRequest($request));
+            $result = $useCase->execute(LoginInput::fromArray($request->validated()));
         } catch (InvalidCredentials) {
             return new JsonResponse([
                 'errors' => [[

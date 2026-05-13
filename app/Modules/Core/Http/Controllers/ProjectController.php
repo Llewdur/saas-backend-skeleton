@@ -7,7 +7,6 @@ namespace App\Modules\Core\Http\Controllers;
 use App\Modules\Core\Application\DTOs\ProjectChanges;
 use App\Modules\Core\Application\DTOs\ProjectInput;
 use App\Modules\Core\Application\UseCases\CreateProject;
-use App\Modules\Core\Application\UseCases\UpdateProject;
 use App\Modules\Core\Domain\Models\Project;
 use App\Modules\Core\Http\Requests\StoreProjectRequest;
 use App\Modules\Core\Http\Requests\UpdateProjectRequest;
@@ -19,14 +18,16 @@ final class ProjectController
 {
     public function index(): AnonymousResourceCollection
     {
-        $projects = Project::query()->orderByDesc('id')->paginate(25);
+        $projects = Project::query()
+            ->orderByDesc('id')
+            ->cursorPaginate(25);
 
         return ProjectResource::collection($projects);
     }
 
     public function store(StoreProjectRequest $request, CreateProject $useCase): JsonResponse
     {
-        $project = $useCase->execute(ProjectInput::fromRequest($request));
+        $project = $useCase->execute(ProjectInput::fromArray($request->validated()));
 
         return ProjectResource::make($project)->response()->setStatusCode(201);
     }
@@ -36,14 +37,16 @@ final class ProjectController
         return ProjectResource::make($project)->response();
     }
 
-    public function update(
-        UpdateProjectRequest $request,
-        Project $project,
-        UpdateProject $useCase,
-    ): JsonResponse {
-        $updated = $useCase->execute($project, ProjectChanges::fromRequest($request));
+    public function update(UpdateProjectRequest $request, Project $project): JsonResponse
+    {
+        $payload = ProjectChanges::fromArray($request->validated())->toEloquentPayload();
 
-        return ProjectResource::make($updated)->response();
+        if ($payload !== []) {
+            $project->fill($payload)->save();
+            $project->refresh();
+        }
+
+        return ProjectResource::make($project)->response();
     }
 
     public function destroy(Project $project): JsonResponse

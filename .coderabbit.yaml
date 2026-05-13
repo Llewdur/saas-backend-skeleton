@@ -1,0 +1,52 @@
+language: en-US
+
+reviews:
+  profile: assertive
+  # When CodeRabbit finds an actionable issue, post a "Request Changes" review
+  # rather than just a comment. Pair this with branch protection that requires
+  # all conversations resolved + all reviews approving before merge.
+  request_changes_workflow: true
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: true
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - main
+    # Don't auto-pause after N rapid pushes. CR's default behaviour was to
+    # silently stop reviewing — set high so every push gets a fresh review.
+    auto_pause_after_reviewed_commits: 100
+  path_filters:
+    - "!**/*.md"
+    - "!docs/**"
+    - "!storage/**"
+    - "!bootstrap/cache/**"
+    - "!vendor/**"
+  path_instructions:
+    - path: "app/**/*.php"
+      instructions: |
+        Conventions documented in CODING_STANDARDS.md. Apply rigorously:
+        declare(strict_types=1) on every file; final classes; readonly DTOs/VOs;
+        backed enums with match-based behaviour; thin controllers (≤ 15 lines);
+        use cases take DTOs (fromArray) and wrap multi-writes in transactions;
+        domain exceptions extend DomainException with static named constructors;
+        no service methods that proxy a single repo call; no defensive code for
+        states the type system prevents.
+
+        The project's critical invariant is multi-tenant isolation:
+        BelongsToTenant trait enforces it via a global scope + creating
+        auto-fill + updating immutability guard. Any new query or write on a
+        tenant-owned model must respect that — flag any withoutGlobalScopes(),
+        any direct tenant_id mass-assignment, any endpoint missing
+        tenant.resolve / tenant.ensure middleware.
+
+    - path: "tests/**/*.php"
+      instructions: |
+        Pest 4 syntax. it()-style sentence names. RefreshDatabase on feature
+        tests. Factories for all models. Assert specific values (paths,
+        status, payload), not just "didn't throw".
+
+chat:
+  auto_reply: true

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\User;
 use App\Modules\Core\Domain\Models\Project;
 use App\Modules\Tenant\Domain\Enums\Role;
+use App\Modules\Tenant\Domain\Exceptions\CrossTenantAccessAttempted;
 use App\Modules\Tenant\Domain\Models\Membership;
 use App\Modules\Tenant\Domain\Models\Tenant;
 
@@ -96,6 +97,19 @@ it('refuses to create a project for a Viewer', function (): void {
         ->assertForbidden();
 });
 
+it('rejects writes when the user has a high role in another tenant but is a Viewer in the current one', function (): void {
+    $low = Tenant::factory()->create(['slug' => 'low-here']);
+    $high = Tenant::factory()->create(['slug' => 'high-there']);
+    $user = User::factory()->create();
+    Membership::factory()->create(['tenant_id' => $low->id, 'user_id' => $user->id, 'role' => Role::Viewer->value]);
+    Membership::factory()->create(['tenant_id' => $high->id, 'user_id' => $user->id, 'role' => Role::Owner->value]);
+
+    $this->actingAs($user)
+        ->withHeader('X-Tenant', 'low-here')
+        ->postJson('/api/v1/projects', ['name' => 'attempt'])
+        ->assertForbidden();
+});
+
 it('updates a project name without touching description', function (): void {
     $tenant = Tenant::factory()->create(['slug' => 'omega']);
     $project = Project::factory()->create([
@@ -132,4 +146,16 @@ it('blocks forged tenant_id in the request payload', function (): void {
         ->firstOrFail();
 
     expect($project->tenant_id)->toBe($tenantA->id);
+});
+
+it('rejects mutating a project tenant_id after creation (row migration)', function (): void {
+    $tenantA = Tenant::factory()->create();
+    $tenantB = Tenant::factory()->create();
+    $project = Project::factory()->create(['tenant_id' => $tenantA->id]);
+
+    $project->tenant_id = $tenantB->id;
+
+    expect(fn () => $project->save())->toThrow(CrossTenantAccessAttempted::class);
+
+    expect(Project::withoutGlobalScopes()->find($project->id)->tenant_id)->toBe($tenantA->id);
 });

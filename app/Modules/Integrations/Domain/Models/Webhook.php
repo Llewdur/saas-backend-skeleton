@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Integrations\Domain\Models;
 
 use App\Modules\Integrations\Database\Factories\WebhookFactory;
-use App\Modules\Tenant\Infrastructure\Persistence\BelongsToTenant;
+use App\Modules\Tenant\Domain\Concerns\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;

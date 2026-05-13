@@ -6,6 +6,7 @@ namespace App\Modules\Tenant\Domain\Models;
 
 use App\Modules\Tenant\Database\Factories\TenantFactory;
 use App\Modules\Tenant\Domain\Enums\Plan;
+use App\Modules\Tenant\Domain\ValueObjects\TenantId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -38,6 +39,11 @@ final class Tenant extends Model
     public function memberships(): HasMany
     {
         return $this->hasMany(Membership::class);
+    }
+
+    public function tenantId(): TenantId
+    {
+        return new TenantId($this->id);
     }
 
     public function isOnPaidPlan(): bool

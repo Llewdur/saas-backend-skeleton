@@ -12,7 +12,7 @@ final readonly class TenantId implements Stringable
     public function __construct(public int $value)
     {
         if ($value <= 0) {
-            throw new InvalidArgumentException("TenantId must be positive, got {$value}");
+            throw new InvalidArgumentException("TenantId must be a positive integer, got {$value}.");
         }
     }
 
