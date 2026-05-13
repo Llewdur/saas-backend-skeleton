@@ -107,8 +107,11 @@ php artisan key:generate
 touch database/database.sqlite
 php artisan migrate
 
-# Run the suite (29 tests, ~0.7s)
+# Run the suite (61 tests, ~1.2s)
 composer test
+
+# Same suite with coverage gate (CI runs this; 70% min, ratcheting up)
+composer coverage
 
 # Static analysis + formatting check
 composer analyse
@@ -141,8 +144,8 @@ All routes are prefixed `/api/v1`. Tenant-scoped routes accept tenant resolution
 
 | Method | Path | Scope | Notes |
 |---|---|---|---|
-| `POST` | `/auth/register` | public | Creates user + personal tenant + owner membership atomically. |
-| `POST` | `/auth/login` | public | Returns a Sanctum token. |
+| `POST` | `/auth/register` | public, throttled 5/min/IP | Creates user + personal tenant + owner membership atomically. |
+| `POST` | `/auth/login` | public, throttled 5/min/IP | Returns a Sanctum token whose abilities are `tenant:{id}` for each membership at login time. |
 | `POST` | `/auth/logout` | auth | Revokes the current token. |
 | `GET`  | `/auth/me` | auth | Current user. |
 | `PATCH`| `/users/me` | auth | Update own profile (sparse). |
@@ -164,41 +167,71 @@ The single feature worth understanding is how an authenticated API request gets 
 
 **1. `ResolveTenant` middleware** — `app/Modules/Tenant/Http/Middleware/ResolveTenant.php`
 
-Runs *before* `SubstituteBindings` (registered with `prepend:` in `bootstrap/app.php`). Reads the `X-Tenant` header (or falls back to the authenticated user's first membership) and binds the tenant into a request-scoped `TenantContext` singleton.
+Runs *before* `SubstituteBindings` (registered with `prepend:` in `bootstrap/app.php`). Resolves the tenant in this order:
 
-**2. `BelongsToTenant` trait** — `app/Modules/Tenant/Infrastructure/Persistence/BelongsToTenant.php`
+1. `X-Tenant` header → tenant lookup (slug or numeric ID) → membership check. The user must actually be a member of the requested tenant *and* the current bearer token must hold the `tenant:{id}` ability granted at login. Otherwise the header is silently ignored and resolution falls through.
+2. Fallback: the user's first membership whose `tenant:{id}` ability is on the current token.
+3. If both fail, the context is left empty; downstream `tenant.ensure` middleware decides whether that's a 400 for the route.
 
-Two pieces of magic, both opt-in:
+The context itself is bound as `scoped()`, not `singleton()` — under Octane / Swoole / RoadRunner the app instance survives across requests, and a singleton would leak the previous request's tenant. `clear()` runs at the top of every middleware pass as belt-and-braces.
+
+**2. `BelongsToTenant` trait** — `app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php`
+
+Three pieces of behaviour:
 
 ```php
-// On every query against the model:
+// On every query against the model — global scope:
 $query->where('<table>.tenant_id', $context->id());
 
-// On every model create:
+// On every model create — fill from context if not already supplied:
 if ($model->getAttribute('tenant_id') === null) {
     $model->setAttribute('tenant_id', $context->id());
 }
+
+// On every model update — reject any change to tenant_id:
+if ($model->isDirty('tenant_id')) {
+    throw CrossTenantAccessAttempted::with($original, $new);
+}
 ```
 
-Any model that uses the trait is automatically tenant-scoped on read and tenant-stamped on write. **A forged `tenant_id` in the request payload is overwritten**, because the trait's `creating` hook only fills when `tenant_id` is null — but `Project::$fillable` doesn't include `tenant_id`, so it's stripped from the mass-assign anyway. Two independent reasons it can't be spoofed.
+Two independent reasons a forged `tenant_id` in a request payload can't land:
 
-**3. `TenantPolicy` (defense in depth)** — base policy rejects any access where the resource's `tenant_id` doesn't match the context.
+- Models exclude `tenant_id` from `$fillable`, so mass-assign drops it.
+- The trait's `creating` hook fills `tenant_id` from the resolved context.
 
-Proof that this holds: see `tests/Feature/ProjectsTest.php` — there are tests for cross-tenant view, delete, *and* the forged-tenant-id case.
+And once a row exists, `tenant_id` is immutable for its lifetime — the
+`updating` hook throws if a caller tries to migrate a row across tenants.
+
+`tests/Feature/ProjectsTest.php` proves all three rules: cross-tenant view
+returns 404, cross-tenant delete returns 404, a forged `tenant_id` in the
+POST body is overwritten with the resolved tenant, and a direct attempt to
+set `$project->tenant_id = $otherTenant->id` throws.
+
+There is *no* `TenantPolicy` class. The trait + `$fillable` exclusion +
+`updating`-guard combination is the full enforcement layer — adding a
+policy that re-checks `tenant_id` in `view()` / `update()` would be
+theatrical defense for a code path the global scope already blocks, and
+violates the codebase's own §0.5 ("don't write defensive code for states
+the type system already prevents"). If you ever introduce a query that
+calls `withoutGlobalScopes()`, write the policy *then*.
 
 ---
 
 ## Testing & CI
 
-- **29 tests, 72 assertions, ~0.7s.** Pest 4, SQLite in-memory.
-- The cross-tenant isolation suite is `tests/Feature/ProjectsTest.php` — the most important test file in the repo.
+- **61 tests, 116 assertions, ~1.2s.** Pest 4, SQLite in-memory.
+- The cross-tenant isolation suite is `tests/Feature/ProjectsTest.php` and `tests/Feature/TenantIsolationTest.php` — the most important test files in the repo.
+- Line coverage is gated at **70%** in CI (`composer coverage`), with pcov as the driver. The HTML report is uploaded as a workflow artifact (7-day retention) for drill-down.
 - CI (`.github/workflows/ci.yml`) runs on every push and PR:
   - `composer lint` — Pint --test
   - `composer analyse` — PHPStan level 8
-  - `composer test` — full Pest suite
+  - `composer coverage` — full Pest suite with `--min=70`
+- Two additional workflows run on PRs:
+  - `.github/workflows/claude-code-review.yml` — automatic PR review by Claude, scoped to this project's invariants (multi-tenant isolation, coding standards). Needs `CLAUDE_CODE_OAUTH_TOKEN` in repo secrets.
+  - `.github/workflows/claude.yml` — `@claude` mentions in issues / PR comments / PR reviews.
 
 ```bash
-composer ci   # runs all three locally
+composer ci   # runs lint + analyse + coverage locally
 ```
 
 ---

@@ -14,9 +14,20 @@ final class LogoutController
     {
         $token = $request->user()?->currentAccessToken();
 
-        if ($token instanceof PersonalAccessToken) {
-            $token->delete();
+        if (! $token instanceof PersonalAccessToken) {
+            // No bearer token present — session / TransientToken / nothing.
+            // Don't silently 204; the caller asked for token revocation and
+            // didn't get one. Be explicit so misconfigured clients fail loud.
+            return new JsonResponse([
+                'errors' => [[
+                    'code' => 'no_bearer_token',
+                    'title' => 'Bad Request',
+                    'detail' => 'No bearer token to revoke. Authenticate with a Sanctum token before calling /auth/logout.',
+                ]],
+            ], 400);
         }
+
+        $token->delete();
 
         return new JsonResponse(status: 204);
     }
