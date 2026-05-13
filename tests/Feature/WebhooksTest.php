@@ -128,6 +128,18 @@ it('does not follow redirects', function (): void {
     Http::assertNotSent(fn ($request): bool => str_contains($request->url(), 'evil.example.test'));
 });
 
+it('computes a jittered backoff that lives within ±25% of the first base value', function (): void {
+    // Without a queue-injected Job, attempts() defaults to 0; the trait clamps
+    // to max(1, attempts) - 1 = index 0, so this exercises BACKOFF_BASE_SECONDS[0] = 30s.
+    $job = new DispatchOutboundWebhook(webhookId: 1, event: 'project.created', payload: []);
+
+    for ($i = 0; $i < 50; $i++) {
+        $delay = $job->backoff();
+        expect($delay)->toBeGreaterThanOrEqual(22)  // 30 * 0.75
+            ->and($delay)->toBeLessThanOrEqual(38); // 30 * 1.25 (rounded)
+    }
+});
+
 it('disables the webhook and throws when the target is an unsafe address', function (): void {
     Http::fake(); // never reached
 

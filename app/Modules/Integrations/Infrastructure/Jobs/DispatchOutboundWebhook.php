@@ -7,6 +7,7 @@ namespace App\Modules\Integrations\Infrastructure\Jobs;
 use App\Modules\Integrations\Domain\Exceptions\UnsafeWebhookTarget;
 use App\Modules\Integrations\Domain\Models\Webhook;
 use App\Modules\Integrations\Infrastructure\Http\UrlGuard;
+use App\Support\Concerns\HasJitteredBackoff;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -28,15 +29,19 @@ use Throwable;
  *     re-route to a private address.
  *   - No redirect-following — the guard would have to re-run on the
  *     redirect target, which is exactly the kind of bypass we don't want.
+ *   - Decorrelated-jitter backoff (HasJitteredBackoff trait) — failed
+ *     retries spread across time so workers don't thundering-herd a
+ *     recovering receiver.
  */
 final class DispatchOutboundWebhook implements ShouldBeUnique, ShouldQueue
 {
-    use Queueable;
+    use HasJitteredBackoff, Queueable;
+
+    private const BACKOFF_BASE_SECONDS = [30, 60, 300, 900, 3600];
+
+    public string $queue = 'webhooks';
 
     public int $tries = 5;
-
-    /** @var array<int, int> */
-    public array $backoff = [30, 60, 300, 900, 3600];
 
     public int $timeout = 15;
 

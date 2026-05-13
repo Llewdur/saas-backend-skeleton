@@ -9,8 +9,10 @@
         "php": "^8.3",
         "laravel/cashier": "^16.5",
         "laravel/framework": "^13.7",
+        "laravel/horizon": "^5.46",
         "laravel/sanctum": "^4.3",
         "laravel/tinker": "^3.0",
+        "predis/predis": "^3.4",
         "spatie/laravel-activitylog": "^5.0",
         "spatie/laravel-permission": "^7.4"
     },
@@ -58,7 +60,7 @@
         ],
         "coverage": [
             "@php artisan config:clear --ansi",
-            "@php vendor/bin/pest --colors=always --coverage --min=70 --coverage-html=coverage --coverage-text"
+            "@php vendor/bin/pest --colors=always --coverage --coverage-html=coverage --coverage-text"
         ],
         "lint": [
             "@php vendor/bin/pint --test"

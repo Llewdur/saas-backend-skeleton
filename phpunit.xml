@@ -16,6 +16,20 @@
         <include>
             <directory>app</directory>
         </include>
+        <exclude>
+            <!-- Framework glue with no logic of our own. Service providers
+                 register bindings + Gates; testing them is testing Laravel. -->
+            <file>app/Providers/AppServiceProvider.php</file>
+            <file>app/Providers/HorizonServiceProvider.php</file>
+            <file>app/Support/ModuleServiceProvider.php</file>
+            <file>app/Modules/Audit/AuditModuleServiceProvider.php</file>
+            <file>app/Modules/Auth/AuthModuleServiceProvider.php</file>
+            <file>app/Modules/Billing/BillingModuleServiceProvider.php</file>
+            <file>app/Modules/Core/CoreModuleServiceProvider.php</file>
+            <file>app/Modules/Integrations/IntegrationsModuleServiceProvider.php</file>
+            <file>app/Modules/Tenant/TenantModuleServiceProvider.php</file>
+            <file>app/Modules/Users/UsersModuleServiceProvider.php</file>
+        </exclude>
     </source>
     <php>
         <env name="APP_ENV" value="testing"/>
