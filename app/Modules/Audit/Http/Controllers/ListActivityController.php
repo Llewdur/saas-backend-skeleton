@@ -4,34 +4,15 @@ declare(strict_types=1);
 
 namespace App\Modules\Audit\Http\Controllers;
 
-use App\Modules\Tenant\Domain\TenantContext;
+use App\Modules\Audit\Application\UseCases\ListRecentActivity;
 use Illuminate\Http\JsonResponse;
 use Spatie\Activitylog\Models\Activity;
 
 final class ListActivityController
 {
-    public function __invoke(TenantContext $context): JsonResponse
+    public function __invoke(ListRecentActivity $useCase): JsonResponse
     {
-        $tenantId = $context->id();
-
-        $activities = Activity::query()
-            ->where(function ($query) use ($tenantId): void {
-                // Tenant model's own activity.
-                $query->where(function ($q) use ($tenantId): void {
-                    $q->where('subject_type', 'App\\Modules\\Tenant\\Domain\\Models\\Tenant')
-                        ->where('subject_id', $tenantId);
-                })
-                // Plus any project's activity scoped to this tenant.
-                    ->orWhere(function ($q) use ($tenantId): void {
-                        $q->where('subject_type', 'App\\Modules\\Core\\Domain\\Models\\Project')
-                            ->whereIn('subject_id', function ($sub) use ($tenantId): void {
-                                $sub->select('id')->from('projects')->where('tenant_id', $tenantId);
-                            });
-                    });
-            })
-            ->orderByDesc('id')
-            ->limit(100)
-            ->get();
+        $activities = $useCase->execute();
 
         return new JsonResponse([
             'data' => $activities->map(fn (Activity $a): array => [

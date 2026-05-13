@@ -29,6 +29,7 @@ final class Webhook extends Model
 
     protected $casts = [
         'events' => 'array',
+        'secret' => 'encrypted',
         'disabled_at' => 'datetime',
     ];
 

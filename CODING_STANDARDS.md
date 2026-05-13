@@ -603,6 +603,7 @@ Every trait gets a one-line PHPDoc explaining what it injects (boot logic, scope
 - Use `uuid` PKs only when IDs leak externally (webhook IDs, public-share tokens). Bigints elsewhere.
 - **Normalise existing data in the same migration** when changing identifier formats. Don't rely on app code to match both old and new formats indefinitely.
 - **No data backfills inside schema migrations.** Run backfills as a separate `php artisan` command so schema and data changes can be deployed independently.
+- **Migrations are exempt from the "`final class`" rule** in §10 / §16 / etc. Laravel's anonymous-class migration syntax (`return new class extends Migration { ... }`) is the canonical pattern, and PHP does not permit `final` on anonymous classes (the RFC for `new final class` was rejected). Don't try to make migration classes final; reviewers should not flag this.
 
 ---
 

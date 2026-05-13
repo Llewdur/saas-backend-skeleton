@@ -68,8 +68,21 @@ final class ResolveTenant
         // Critical: the user must actually be a member of the requested tenant.
         // Without this check, any authenticated user can read/write any tenant.
         $isMember = $user->memberships()->where('tenant_id', $tenant->id)->exists();
+        if (! $isMember) {
+            return null;
+        }
 
-        return $isMember ? $tenant : null;
+        // If the request is bearer-token-authenticated, the token must hold the
+        // tenant:{id} ability granted at login. This contains a stolen token's
+        // blast radius to the tenants present when the token was issued.
+        if (method_exists($user, 'currentAccessToken')
+            && $user->currentAccessToken() !== null
+            && ! $user->tokenCan("tenant:{$tenant->id}")
+        ) {
+            return null;
+        }
+
+        return $tenant;
     }
 
     private function resolveFromUser(Request $request): ?Tenant
@@ -79,8 +92,19 @@ final class ResolveTenant
             return null;
         }
 
-        $membership = $user->memberships()->orderBy('id')->first();
+        $hasToken = method_exists($user, 'currentAccessToken') && $user->currentAccessToken() !== null;
 
-        return $membership?->tenant;
+        foreach ($user->memberships()->orderBy('id')->get() as $membership) {
+            // Without a bearer token (session / web / actingAs), the ability
+            // check doesn't apply — return the first membership. With a token,
+            // pick the first tenant whose ability is on the token (so a
+            // stolen token can't fall through to a tenant the user later
+            // joined after token issue).
+            if (! $hasToken || $user->tokenCan("tenant:{$membership->tenant_id}")) {
+                return $membership->tenant;
+            }
+        }
+
+        return null;
     }
 }

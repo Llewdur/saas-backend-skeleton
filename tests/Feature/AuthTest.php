@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\User;
 use App\Modules\Tenant\Domain\Enums\Role;
+use App\Modules\Tenant\Domain\Models\Membership;
 use App\Modules\Tenant\Domain\Models\Tenant;
 
 it('registers a user with a personal tenant and owner membership atomically', function (): void {
@@ -84,4 +85,35 @@ it('revokes the current token on logout', function (): void {
         ->assertNoContent();
 
     expect($user->tokens()->count())->toBe(0);
+});
+
+it('returns 400 on logout when no bearer token is present', function (): void {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->postJson('/api/v1/auth/logout')
+        ->assertStatus(400)
+        ->assertJsonPath('errors.0.code', 'no_bearer_token');
+});
+
+it('issues a Sanctum token with a tenant ability per membership', function (): void {
+    $user = User::factory()->create([
+        'email' => 'multi@example.test',
+        'password' => bcrypt('multi-pass-12345'),
+    ]);
+    $tenantA = Tenant::factory()->create();
+    $tenantB = Tenant::factory()->create();
+    Membership::factory()->create(['tenant_id' => $tenantA->id, 'user_id' => $user->id, 'role' => Role::Owner->value]);
+    Membership::factory()->create(['tenant_id' => $tenantB->id, 'user_id' => $user->id, 'role' => Role::Member->value]);
+
+    $this->postJson('/api/v1/auth/login', [
+        'email' => 'multi@example.test',
+        'password' => 'multi-pass-12345',
+    ])->assertOk();
+
+    // Latest token on this user should hold tenant:{A} AND tenant:{B}.
+    $abilities = $user->tokens()->latest('id')->first()->abilities;
+
+    expect($abilities)->toContain("tenant:{$tenantA->id}")
+        ->and($abilities)->toContain("tenant:{$tenantB->id}");
 });
