@@ -2,7 +2,10 @@ language: en-US
 
 reviews:
   profile: assertive
-  request_changes_workflow: false
+  # When CodeRabbit finds an actionable issue, post a "Request Changes" review
+  # rather than just a comment. Pair this with branch protection that requires
+  # all conversations resolved + all reviews approving before merge.
+  request_changes_workflow: true
   high_level_summary: true
   poem: false
   review_status: true
