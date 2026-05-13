@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Modules\Core\Http\Requests;
 
-use App\Modules\Tenant\Domain\Enums\Role;
 use App\Modules\Tenant\Domain\Models\Membership;
 use App\Modules\Tenant\Domain\TenantContext;
 use Illuminate\Foundation\Http\FormRequest;
