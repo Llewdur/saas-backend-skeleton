@@ -15,6 +15,9 @@ reviews:
     drafts: false
     base_branches:
       - main
+    # Don't auto-pause after N rapid pushes. CR's default behaviour was to
+    # silently stop reviewing — set high so every push gets a fresh review.
+    auto_pause_after_reviewed_commits: 100
   path_filters:
     - "!**/*.md"
     - "!docs/**"
