@@ -7,6 +7,7 @@ namespace App\Modules\Tenant\Domain\Concerns;
 use App\Modules\Tenant\Domain\Exceptions\CrossTenantAccessAttempted;
 use App\Modules\Tenant\Domain\Models\Tenant;
 use App\Modules\Tenant\Domain\TenantContext;
+use App\Modules\Tenant\Domain\ValueObjects\TenantId;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -53,8 +54,8 @@ trait BelongsToTenant
                 return;
             }
 
-            $original = (int) $model->getOriginal('tenant_id');
-            $new = (int) $model->getAttribute('tenant_id');
+            $original = new TenantId((int) $model->getOriginal('tenant_id'));
+            $new = new TenantId((int) $model->getAttribute('tenant_id'));
 
             throw CrossTenantAccessAttempted::with($original, $new);
         });

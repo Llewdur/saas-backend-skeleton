@@ -184,14 +184,21 @@ final readonly class RegisterUserInput
 ## 6. Value Objects
 
 **Rule:** a value object exists when a primitive has *rules*. Use one if:
-- It can be invalid (`Email`, `Slug`, `Money`).
+- It can be invalid (`Email`, `Slug`, `Money`) — validate in the constructor; an instance that exists is valid by definition.
 - It has behavior (`Money::add()`, `Slug::matches()`).
-- It's an ID that crosses module boundaries (`TenantId`, `UserId`, `MembershipId`).
-- It appears in 3+ places and you want refactors to be safe.
+- It crosses a module boundary as a *bare* value (not as a property of a model that's already passed).
+- It appears in 3+ places where confusing it with a similar-typed value would be a real bug.
 
-Do **not** wrap every primitive. `string $name` is fine. `Slug $slug` is not.
+Do **not** wrap every primitive. `string $name` is fine. `Slug $slug` is not. Do **not** create a VO that no method or DTO actually receives as a typed parameter — that's decoration, and the architect agent will catch it (so will the next reviewer).
 
-**Typed IDs.** Every aggregate ID gets a value object — `TenantId`, `UserId`, `ProjectId`. Pass `TenantId $tenantId` across module boundaries, not `int $tenantId`. Eliminates "wrong ID type passed to wrong function" at compile time.
+**Typed IDs — only where they cross a boundary as a bare value.** Most of this codebase passes the full Eloquent model across boundaries (`User`, `Tenant`, `Project`), so an `int $id` rarely travels alone. The exception is `TenantContext`, which exposes the current tenant's id to consumers that *don't* hold the `Tenant` model — multiple modules, multiple call sites. So:
+
+- ✅ `TenantId` — used as the return type of `Tenant::tenantId()` and `TenantContext::tenantId()`, and as the parameter type on `CrossTenantAccessAttempted::with()`. Genuine boundary crossings.
+- ❌ `UserId`, `MembershipId`, `ProjectId` — would be decoration in this codebase. Every place that would receive them already receives the full model. **Add one only when a new use case actually receives the bare id as a parameter.**
+
+`TenantContext` exposes both methods deliberately:
+- `tenantId(): TenantId` — for domain code and module-boundary calls (preferred).
+- `id(): int` — for framework touchpoints (query builders, route binding) that need the raw int. Returns `$this->tenantId()->value`.
 
 ```php
 <?php

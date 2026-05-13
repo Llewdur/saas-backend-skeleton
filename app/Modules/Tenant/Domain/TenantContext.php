@@ -6,10 +6,19 @@ namespace App\Modules\Tenant\Domain;
 
 use App\Modules\Tenant\Domain\Exceptions\TenantContextMissing;
 use App\Modules\Tenant\Domain\Models\Tenant;
+use App\Modules\Tenant\Domain\ValueObjects\TenantId;
 
 /**
- * Container-bound singleton holding the current tenant for the request.
- * Set by ResolveTenant middleware; read by BelongsToTenant trait + policies.
+ * Container-bound, request-scoped holder of the current tenant.
+ *
+ * Set by ResolveTenant middleware; read by BelongsToTenant trait, policies,
+ * and use cases.
+ *
+ * Two read methods exist on purpose:
+ *   - tenantId(): TenantId — for domain-layer code and module-boundary calls
+ *     (typed-ID enforcement per CODING_STANDARDS.md §6).
+ *   - id(): int — for framework touchpoints (query builders, route binding)
+ *     that need the raw int. Returns $this->tenantId()->value.
  */
 final class TenantContext
 {
@@ -39,8 +48,13 @@ final class TenantContext
         return $this->tenant;
     }
 
+    public function tenantId(): TenantId
+    {
+        return new TenantId($this->get()->id);
+    }
+
     public function id(): int
     {
-        return $this->get()->id;
+        return $this->tenantId()->value;
     }
 }
