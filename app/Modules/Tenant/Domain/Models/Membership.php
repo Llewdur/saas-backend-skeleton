@@ -26,7 +26,12 @@ final class Membership extends Model
     /** @use HasFactory<MembershipFactory> */
     use BelongsToTenant, HasFactory;
 
-    protected $fillable = ['tenant_id', 'user_id', 'role'];
+    // tenant_id is intentionally NOT fillable — BelongsToTenant's `creating`
+    // hook auto-fills it from the resolved TenantContext, and any direct
+    // creation path (factories, seeders) must set it via attribute access.
+    // Letting it through mass-assign would re-open the cross-tenant forge
+    // attack the trait is designed to close.
+    protected $fillable = ['user_id', 'role'];
 
     protected $casts = [
         'role' => Role::class,

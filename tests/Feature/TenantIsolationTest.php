@@ -59,6 +59,28 @@ it('ignores an X-Tenant header for a tenant the user is not a member of', functi
     expect(app(TenantContext::class)->get()->slug)->toBe('home');
 });
 
+it('strips a mass-assigned tenant_id when creating a Membership (BelongsToTenant + $fillable)', function (): void {
+    $tenantA = Tenant::factory()->create();
+    $tenantB = Tenant::factory()->create();
+    $user = User::factory()->create();
+
+    app(TenantContext::class)->set($tenantA);
+
+    // Forge attempt: mass-assign tenant_id of a foreign tenant. Membership's
+    // $fillable excludes tenant_id, so the field is stripped; the trait's
+    // creating hook then fills it from the context (tenantA).
+    Membership::create([
+        'tenant_id' => $tenantB->id,
+        'user_id' => $user->id,
+        'role' => Role::Member->value,
+    ]);
+
+    $row = Membership::withoutGlobalScopes()->where('user_id', $user->id)->firstOrFail();
+
+    expect($row->tenant_id)->toBe($tenantA->id)
+        ->and($row->tenant_id)->not->toBe($tenantB->id);
+});
+
 it('clears stale tenant context at the start of every request', function (): void {
     $tenantA = Tenant::factory()->create(['slug' => 'one']);
     $tenantB = Tenant::factory()->create(['slug' => 'two']);
