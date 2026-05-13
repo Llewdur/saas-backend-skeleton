@@ -1,0 +1,87 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Models\User;
+use App\Modules\Tenant\Domain\Enums\Role;
+use App\Modules\Tenant\Domain\Models\Tenant;
+
+it('registers a user with a personal tenant and owner membership atomically', function (): void {
+    $response = $this->postJson('/api/v1/auth/register', [
+        'name' => 'Ada Lovelace',
+        'email' => 'ada@example.test',
+        'password' => 'analytical-engine',
+        'password_confirmation' => 'analytical-engine',
+        'tenant_name' => 'Analytical Engine Co',
+    ])->assertCreated();
+
+    $response->assertJsonPath('data.email', 'ada@example.test');
+
+    $user = User::query()->where('email', 'ada@example.test')->firstOrFail();
+    $tenant = Tenant::query()->where('name', 'Analytical Engine Co')->firstOrFail();
+
+    expect($user->memberships()->count())->toBe(1)
+        ->and($user->memberships()->first()->tenant_id)->toBe($tenant->id)
+        ->and($user->memberships()->first()->role)->toBe(Role::Owner);
+});
+
+it('rejects registration with a duplicate email', function (): void {
+    User::factory()->create(['email' => 'existing@example.test']);
+
+    $this->postJson('/api/v1/auth/register', [
+        'name' => 'Someone',
+        'email' => 'existing@example.test',
+        'password' => 'pass-phrase-1',
+        'password_confirmation' => 'pass-phrase-1',
+        'tenant_name' => 'Org',
+    ])->assertStatus(422)->assertJsonValidationErrors('email');
+});
+
+it('logs in and returns a Sanctum token', function (): void {
+    User::factory()->create([
+        'email' => 'login@example.test',
+        'password' => bcrypt('correct-horse-battery-staple'),
+    ]);
+
+    $response = $this->postJson('/api/v1/auth/login', [
+        'email' => 'login@example.test',
+        'password' => 'correct-horse-battery-staple',
+        'device_name' => 'pest',
+    ])->assertOk();
+
+    expect($response->json('data.token'))->toBeString()
+        ->and(strlen((string) $response->json('data.token')))->toBeGreaterThan(20);
+});
+
+it('rejects login with bad credentials', function (): void {
+    User::factory()->create([
+        'email' => 'login2@example.test',
+        'password' => bcrypt('the-right-password'),
+    ]);
+
+    $this->postJson('/api/v1/auth/login', [
+        'email' => 'login2@example.test',
+        'password' => 'the-wrong-password',
+    ])->assertStatus(401)
+        ->assertJsonPath('errors.0.code', 'invalid_credentials');
+});
+
+it('returns the current user via me when authenticated', function (): void {
+    $user = User::factory()->create(['email' => 'me@example.test']);
+
+    $this->actingAs($user)
+        ->getJson('/api/v1/auth/me')
+        ->assertOk()
+        ->assertJsonPath('data.email', 'me@example.test');
+});
+
+it('revokes the current token on logout', function (): void {
+    $user = User::factory()->create();
+    $token = $user->createToken('pest');
+
+    $this->withHeader('Authorization', 'Bearer '.$token->plainTextToken)
+        ->postJson('/api/v1/auth/logout')
+        ->assertNoContent();
+
+    expect($user->tokens()->count())->toBe(0);
+});
