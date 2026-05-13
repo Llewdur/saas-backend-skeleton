@@ -6,6 +6,7 @@ namespace App\Modules\Core\Http\Requests;
 
 use App\Modules\Tenant\Domain\Enums\Role;
 use App\Modules\Tenant\Domain\Models\Membership;
+use App\Modules\Tenant\Domain\TenantContext;
 use Illuminate\Foundation\Http\FormRequest;
 
 final class StoreProjectRequest extends FormRequest
@@ -17,12 +18,24 @@ final class StoreProjectRequest extends FormRequest
             return false;
         }
 
-        $membership = Membership::query()->where('user_id', $user->id)->first();
+        $context = app(TenantContext::class);
+        if (! $context->has()) {
+            return false;
+        }
+
+        // Membership must be in the *current* tenant — not any tenant the user
+        // happens to belong to. Without this, a Member in tenant B could
+        // pass authorization for a write in tenant A.
+        $membership = Membership::query()
+            ->where('user_id', $user->id)
+            ->where('tenant_id', $context->id())
+            ->first();
+
         if ($membership === null) {
             return false;
         }
 
-        return in_array($membership->role, [Role::Owner, Role::Admin, Role::Member], strict: true);
+        return $membership->role->canWrite();
     }
 
     /**

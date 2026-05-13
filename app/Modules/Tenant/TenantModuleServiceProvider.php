@@ -12,10 +12,16 @@ use Illuminate\Routing\Router;
 
 final class TenantModuleServiceProvider extends ModuleServiceProvider
 {
-    /** @var array<class-string, class-string> */
-    public array $singletons = [
-        TenantContext::class => TenantContext::class,
-    ];
+    public function register(): void
+    {
+        parent::register();
+
+        // `scoped` (not `singleton`) — under Octane / Swoole / RoadRunner the
+        // app instance survives across requests, so a singleton would leak
+        // tenant context. `scoped` is per-request and Laravel resets it
+        // automatically on Octane request boundaries.
+        $this->app->scoped(TenantContext::class, fn (): TenantContext => new TenantContext);
+    }
 
     public function boot(): void
     {
