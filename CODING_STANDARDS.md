@@ -626,20 +626,21 @@ Every trait gets a one-line PHPDoc explaining what it injects (boot logic, scope
 
 ## 19. Static analysis & formatting
 
-**Mago** (Carthage Software) is the target analyzer + linter + formatter.
+**Mago** (Carthage Software) is the analyzer + linter. Pint is still the auto-formatter (Mago's formatter may take over later).
 
-- `mago analyse` runs as part of CI. Equivalent of PHPStan level 8.
-- `mago lint` enforces lint rules (Mago's lint set).
-- `mago fmt` is the formatter. Pint stays for now during transition; once Mago format matches reviewer expectations, drop Pint.
+- `mago analyse` is the static analyser — equivalent of PHPStan level 8 strictness.
+- `mago lint` runs Mago's lint rule set (including the `cyclomatic-complexity` and `sensitive-parameter` rules we lean on).
+- `composer lint` runs `pint --test` *and* `mago lint --fail-on-out-of-sync-baseline`.
+- `composer analyse` runs `mago analyse --fail-on-out-of-sync-baseline`.
+
+The binary lives at `tools/mago` (gitignored). Install via `tools/install-mago.sh` — CI runs this in its own step.
 
 **Baseline discipline:**
 - **Never add entries to `mago-lint-baseline.toml` or `mago-analyse-baseline.toml`.** New code must pass cleanly.
 - Baselines exist *only* to grandfather pre-existing issues so Mago could be adopted incrementally. They are not a dumping ground for new problems.
-- **Remove entries when you touch a baselined file.** Run `mago lint --ignore-baseline <files>` and `mago analyse --ignore-baseline <files>` against your changed files. Fix what's reported. Drop those entries from the baseline.
-- Baselines must shrink, never grow. A PR that adds baseline entries has either introduced new issues (fix them) or regenerated the baseline to silence them (don't).
-- No `// @phpstan-ignore` / `// @mago-ignore` without a same-line comment explaining *why*.
-
-> **Tool note:** Mago's composer wrapper (`carthage-software/mago`) is currently shipping a broken dist tarball as of writing. Until that's fixed, the repo uses **PHPStan/Larastan level 8** as a stand-in. The rules above apply identically — when Mago is wired in, the CI workflow swaps `php vendor/bin/phpstan` for `tools/mago analyse`, and the baseline files become live.
+- **Remove entries when you touch a baselined file.** Run `tools/mago lint --ignore-baseline <files>` and `tools/mago analyse --ignore-baseline <files>` against your changed files. Fix what's reported. Drop those entries from the baseline.
+- Baselines must shrink, never grow. A PR that adds baseline entries has either introduced new issues (fix them) or regenerated the baseline to silence them (don't). CI runs with `--fail-on-out-of-sync-baseline` so a PR that fixes a baselined issue but forgets to remove the entry also fails.
+- No `// @mago-ignore` without a same-line comment explaining *why*.
 
 ---
 

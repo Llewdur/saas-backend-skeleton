@@ -29,8 +29,11 @@ Real product surfaces the skeleton stubs out.
 
 | # | Item | Issue |
 |---|---|---|
-| 6 | Swap PHPStan/Larastan for Mago (blocked on upstream composer-wrapper fix) | [#9](https://github.com/Llewdur/saas-backend-skeleton/issues/9) |
-| 7 | Ratchet coverage gate above 70% as suite grows | [#10](https://github.com/Llewdur/saas-backend-skeleton/issues/10) |
+| 6 | Raise test coverage and re-enable the gate at 80% (currently ungated) | [#10](https://github.com/Llewdur/saas-backend-skeleton/issues/10) |
+
+### Done
+
+- Swap PHPStan/Larastan for Mago — closed by #13. Binary install via `tools/install-mago.sh`; baselines hold pre-existing findings, new code must pass cleanly.
 
 ---
 

@@ -50,7 +50,17 @@ final class UrlGuard
             return $host;
         }
 
-        $records = @dns_get_record($host, DNS_A | DNS_AAAA);
+        // dns_get_record() emits a PHP warning on lookup failure. We don't
+        // want the @-suppress operator (Mago rule no-error-control-operator),
+        // so route the warning through a no-op handler for the duration of
+        // the call and check the return value explicitly.
+        set_error_handler(static fn (): bool => true);
+        try {
+            $records = dns_get_record($host, DNS_A | DNS_AAAA);
+        } finally {
+            restore_error_handler();
+        }
+
         if ($records === false || $records === []) {
             throw UnsafeWebhookTarget::unresolvableHost($host);
         }
