@@ -11,6 +11,7 @@ use App\Modules\Integrations\Infrastructure\Listeners\FanOutProjectCreated;
 use App\Modules\Tenant\Domain\Models\Tenant;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
+use Throwable;
 
 it('fans out to subscribed webhooks when a project is created', function (): void {
     Queue::fake();
@@ -65,7 +66,7 @@ it('isolates webhook fan-out by tenant', function (): void {
     Queue::assertNotPushed(DispatchOutboundWebhook::class);
 });
 
-it('dispatches with HMAC signature and a unique delivery id, no redirect-following', function (): void {
+it('dispatches with HMAC signature and a unique delivery id', function (): void {
     Http::fake();
     Http::preventStrayRequests();
 
@@ -95,6 +96,37 @@ it('dispatches with HMAC signature and a unique delivery id, no redirect-followi
             && is_string($request->header('X-Delivery-Id')[0])
             && str_contains($body, '"delivery_id"');
     });
+});
+
+it('does not follow redirects', function (): void {
+    // The dispatcher's withOptions(['allow_redirects' => false]) tells Guzzle
+    // not to chase 3xx responses. Verify by faking a 302 that points to
+    // evil.example.test — the dispatcher should send exactly one request
+    // (the original POST) and never touch evil.example.test.
+    Http::fake([
+        'https://8.8.8.8/webhook' => Http::response(null, 302, [
+            'Location' => 'https://evil.example.test/',
+        ]),
+        '*' => Http::response('NOT REACHED', 599),
+    ]);
+
+    $tenant = Tenant::factory()->create();
+    $webhook = Webhook::factory()->create([
+        'tenant_id' => $tenant->id,
+        'url' => 'https://8.8.8.8/webhook',
+        'events' => ['project.created'],
+    ]);
+
+    $job = new DispatchOutboundWebhook($webhook->id, 'project.created', []);
+
+    try {
+        $job->handle();
+    } catch (Throwable) {
+        // ->throw() raises on 302 without redirect-follow; that's expected.
+    }
+
+    Http::assertSentCount(1);
+    Http::assertNotSent(fn ($request): bool => str_contains($request->url(), 'evil.example.test'));
 });
 
 it('disables the webhook and throws when the target is an unsafe address', function (): void {

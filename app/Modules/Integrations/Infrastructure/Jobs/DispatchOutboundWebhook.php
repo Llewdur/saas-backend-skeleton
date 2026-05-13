@@ -22,7 +22,10 @@ use Throwable;
  *     60-second window. The X-Delivery-Id header lets receivers dedupe at
  *     their end too.
  *   - SSRF-hardened: UrlGuard rejects non-http(s) schemes and any private,
- *     loopback, or link-local resolved address before the HTTP call.
+ *     loopback, or link-local resolved address before the HTTP call. The
+ *     validated IP is then pinned to the HTTP client via CURLOPT_RESOLVE,
+ *     so DNS rebinding between assertSafe() and the actual call can't
+ *     re-route to a private address.
  *   - No redirect-following — the guard would have to re-run on the
  *     redirect target, which is exactly the kind of bypass we don't want.
  */
@@ -68,7 +71,7 @@ final class DispatchOutboundWebhook implements ShouldBeUnique, ShouldQueue
         }
 
         try {
-            UrlGuard::assertSafe($webhook->url);
+            $safeIp = UrlGuard::assertSafe($webhook->url);
         } catch (UnsafeWebhookTarget $e) {
             // Disable the webhook so we don't keep retrying an unsafe target.
             $webhook->disabled_at = now();
@@ -93,7 +96,14 @@ final class DispatchOutboundWebhook implements ShouldBeUnique, ShouldQueue
             'X-Delivery-Id' => $this->deliveryId,
         ])->withBody($body, 'application/json')
             ->timeout($this->timeout)
-            ->withOptions(['allow_redirects' => false])
+            ->withOptions([
+                'allow_redirects' => false,
+                // Pin the resolved IP so the request hits the same address
+                // UrlGuard just validated — closes the DNS rebinding window.
+                'curl' => [
+                    CURLOPT_RESOLVE => self::buildResolveDirective($webhook->url, $safeIp),
+                ],
+            ])
             ->post($webhook->url)
             ->throw();
     }
@@ -102,5 +112,20 @@ final class DispatchOutboundWebhook implements ShouldBeUnique, ShouldQueue
     {
         // Surface to logs; idempotency at the delivery-id level means re-runs
         // (after the unique window expires) are safe.
+    }
+
+    /**
+     * Builds a CURLOPT_RESOLVE entry pinning $url's host to $safeIp.
+     * Returns ["host:port:ip"] — the curl format.
+     *
+     * @return array<int, string>
+     */
+    private static function buildResolveDirective(string $url, string $safeIp): array
+    {
+        $parts = parse_url($url);
+        $host = (string) ($parts['host'] ?? '');
+        $port = $parts['port'] ?? (($parts['scheme'] ?? 'http') === 'https' ? 443 : 80);
+
+        return ["{$host}:{$port}:{$safeIp}"];
     }
 }

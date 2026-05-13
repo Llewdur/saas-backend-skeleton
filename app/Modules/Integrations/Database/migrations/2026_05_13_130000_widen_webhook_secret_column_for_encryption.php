@@ -6,6 +6,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+// No down() by design — see CODING_STANDARDS.md §17. Rollbacks are forward-fix
+// migrations, not reversibility.
 return new class extends Migration
 {
     public function up(): void
