@@ -22,12 +22,12 @@ final class ListActivityController
                         ->where('subject_id', $tenantId);
                 })
                 // Plus any project's activity scoped to this tenant.
-                ->orWhere(function ($q) use ($tenantId): void {
-                    $q->where('subject_type', 'App\\Modules\\Core\\Domain\\Models\\Project')
-                        ->whereIn('subject_id', function ($sub) use ($tenantId): void {
-                            $sub->select('id')->from('projects')->where('tenant_id', $tenantId);
-                        });
-                });
+                    ->orWhere(function ($q) use ($tenantId): void {
+                        $q->where('subject_type', 'App\\Modules\\Core\\Domain\\Models\\Project')
+                            ->whereIn('subject_id', function ($sub) use ($tenantId): void {
+                                $sub->select('id')->from('projects')->where('tenant_id', $tenantId);
+                            });
+                    });
             })
             ->orderByDesc('id')
             ->limit(100)

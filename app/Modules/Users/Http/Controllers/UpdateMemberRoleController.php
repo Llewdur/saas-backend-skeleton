@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Users\Http\Controllers;
 
+use App\Models\User;
 use App\Modules\Users\Application\DTOs\UpdateMemberRoleInput;
 use App\Modules\Users\Application\UseCases\UpdateMemberRole;
 use App\Modules\Users\Domain\Exceptions\CannotDemoteLastOwner;
@@ -19,7 +20,7 @@ final class UpdateMemberRoleController
         int $membership,
         UpdateMemberRole $useCase,
     ): JsonResponse {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         try {
