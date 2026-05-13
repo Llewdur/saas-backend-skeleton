@@ -11,7 +11,6 @@ use App\Modules\Integrations\Infrastructure\Listeners\FanOutProjectCreated;
 use App\Modules\Tenant\Domain\Models\Tenant;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
-use Throwable;
 
 it('fans out to subscribed webhooks when a project is created', function (): void {
     Queue::fake();
