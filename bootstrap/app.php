@@ -29,6 +29,18 @@ return Application::configure(basePath: dirname(__DIR__))
         // Map domain exceptions to HTTP responses here per CODING_STANDARDS.md §13.
         // Controllers stay free of try/catch for control flow — exceptions bubble.
         // Detail strings stay generic; the raw exception message is never echoed back.
+
+        // These are user-driven control-flow exceptions, not errors. Without
+        // dontReport, every failed login / forbidden role attempt / cross-
+        // tenant probe gets forwarded to Sentry/Bugsnag/etc and pages oncall
+        // on what is normal API traffic.
+        $exceptions->dontReport([
+            InvalidCredentials::class,
+            InsufficientRole::class,
+            CannotModifySelf::class,
+            CrossTenantAccessAttempted::class,
+        ]);
+
         $envelope = static fn (int $status, string $code, string $title, string $detail): JsonResponse => new JsonResponse(
             ['errors' => [['code' => $code, 'title' => $title, 'detail' => $detail]]],
             $status,
