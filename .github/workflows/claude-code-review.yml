@@ -1,0 +1,65 @@
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+
+jobs:
+  claude-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Claude PR review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            You are reviewing a pull request on a multi-tenant SaaS backend skeleton.
+            The README, PLANNING.md and CODING_STANDARDS.md in the repo state the
+            project's invariants. The most important invariant: cross-tenant
+            isolation MUST NOT be bypassable, including via forged headers or
+            request payloads.
+
+            Review focus, in order:
+              1. Multi-tenancy correctness — did this PR introduce a way to bypass
+                 tenant scoping? Look for new `withoutGlobalScopes()`, new Eloquent
+                 queries that ignore `BelongsToTenant`, new endpoints that don't
+                 sit behind `tenant.resolve` + `tenant.ensure`, mass-assignment of
+                 `tenant_id`.
+              2. Security — SSRF (outbound HTTP), mass-assignment, auth/session
+                 leakage, secrets in code or logs, email/user enumeration.
+              3. Adherence to CODING_STANDARDS.md — strict_types, DTOs over arrays,
+                 typed enums over strings, FormRequest validation, thin controllers,
+                 named domain exceptions.
+              4. Test coverage on the touched code paths (isolation tests are
+                 non-negotiable on tenant-aware code).
+              5. Migration safety — no down(), no DB-level enum columns, no
+                 backfills inside schema migrations.
+
+            Use the gh CLI to leave inline review comments on offending lines
+            and a single summary comment at the end with severity-tagged findings
+            (Critical / High / Medium / Low). Quote file:line in each finding.
+
+            CRITICAL RULES:
+              - DO NOT push code, modify files, merge PRs, or close issues.
+              - DO NOT approve or reject the PR via review state — only post comments.
+              - If you cannot identify any concrete issues, post a brief "no
+                blocking concerns" summary and exit.
+
+          claude_args: '--allowed-tools "Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr comment:*),Bash(gh pr review:*),Bash(gh api:*),Read,Grep,Glob,Bash(rg:*),Bash(find:*)"'
