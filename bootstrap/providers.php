@@ -10,9 +10,11 @@ use App\Modules\Integrations\IntegrationsModuleServiceProvider;
 use App\Modules\Tenant\TenantModuleServiceProvider;
 use App\Modules\Users\UsersModuleServiceProvider;
 use App\Providers\AppServiceProvider;
+use App\Providers\HorizonServiceProvider;
 
 return [
     AppServiceProvider::class,
+    HorizonServiceProvider::class,
 
     TenantModuleServiceProvider::class,
     AuthModuleServiceProvider::class,

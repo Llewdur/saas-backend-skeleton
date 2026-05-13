@@ -11,6 +11,8 @@ use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
 
 final class FanOutProjectCreated implements ShouldQueueAfterCommit
 {
+    public string $queue = 'webhooks';
+
     private const EVENT = 'project.created';
 
     public function handle(ProjectCreated $event): void

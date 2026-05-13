@@ -586,7 +586,27 @@ Every trait gets a one-line PHPDoc explaining what it injects (boot logic, scope
 - `handle()` is the single public method.
 - **Idempotency is mandatory.** A job that runs twice must produce the same outcome. Use unique constraints, locks, or `firstOrCreate` — not "hope it doesn't fire twice."
 - Failure handling via `failed(Throwable $e): void`, not try/catch inside `handle()`.
-- `tries`, `backoff`, `timeout` set explicitly. No defaults.
+- `tries`, `timeout` set explicitly. No defaults.
+- **Backoff must be jittered.** Never use a flat `public array $backoff = [...]` — every worker hitting the same outage retries at the same wall-clock instant, and the recovering receiver gets hit by a thundering herd at exactly the moment it's most fragile.
+
+  Use the `App\Support\Concerns\HasJitteredBackoff` trait and declare your per-attempt base delays as a class constant — the trait implements `backoff()` for you as a fresh decorrelated-jitter draw (±25% of the base) on every call:
+
+  ```php
+  use App\Support\Concerns\HasJitteredBackoff;
+
+  final class DispatchOutboundWebhook implements ShouldQueue
+  {
+      use HasJitteredBackoff, Queueable;
+
+      /** @var array<int, int> */
+      private const BACKOFF_BASE_SECONDS = [30, 60, 300, 900, 3600];
+
+      // tries, timeout, queue still declared as usual
+  }
+  ```
+
+  The underlying math lives in `App\Support\Jitter::decorrelate()` (unit-tested in `tests/Unit/JitterTest.php`). Required for any job that hits an external system (HTTP, mailer, Stripe, S3). Optional for purely in-process jobs (image resize, csv generation) where synchronised retry has no thundering-herd victim.
+- Pin to a **named queue** via `public string $queue = '...'` so Horizon can size workers per workload (see `config/horizon.php`). One supervisor per queue means a slow webhook receiver can't starve audit/email throughput.
 
 ---
 

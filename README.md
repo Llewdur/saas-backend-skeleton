@@ -134,6 +134,44 @@ A Sail dev environment is included as a dev dependency. If you'd rather develop 
 ./vendor/bin/sail test
 ```
 
+### Horizon (queues + dashboard)
+
+Laravel Horizon is wired in. The default quickstart above stays on the `database` queue driver so the project is clone-and-run, but to use Horizon:
+
+```bash
+# .env
+QUEUE_CONNECTION=redis
+
+# Either run a local Redis, or use Sail (it ships one)
+./vendor/bin/sail up -d
+
+# Start the Horizon master process — it spawns workers per config/horizon.php
+php artisan horizon
+```
+
+The dashboard is at **`/horizon`**. In `APP_ENV=local` it's open; in any other environment access is gated by the `viewHorizon` Gate defined in `app/Providers/HorizonServiceProvider.php` (current rule: any authenticated user — tighten before production).
+
+**Named queues** — one supervisor per workload, defined in `config/horizon.php`:
+
+| Queue | What runs there | Retries / timeout |
+|---|---|---|
+| `default` | Catchall — anything that doesn't pin a queue | 1 try, 60s |
+| `webhooks` | `DispatchOutboundWebhook` + `FanOutProjectCreated` listener (outbound HTTP) | 5 tries with backoff, 30s |
+| `audit` | Best-effort activity log writes | 1 try, 30s |
+| `emails` | Mailables (invitations, password reset, verify email) | 3 tries, 30s |
+
+Jobs pin themselves via `public string $queue = '...'` on the class (see `DispatchOutboundWebhook` for the canonical example).
+
+**Production** — point Supervisor at the master process. A ready-to-edit config lives at [`deploy/supervisor/horizon.conf`](deploy/supervisor/horizon.conf):
+
+```bash
+sudo cp deploy/supervisor/horizon.conf /etc/supervisor/conf.d/
+sudo supervisorctl reread && sudo supervisorctl update
+sudo supervisorctl start horizon
+```
+
+Deploys should `php artisan horizon:terminate` to roll workers cleanly.
+
 ---
 
 ## API surface
