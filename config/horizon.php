@@ -89,6 +89,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Horizon Admin Allowlist
+    |--------------------------------------------------------------------------
+    |
+    | Comma-separated emails granted access to the /horizon dashboard in any
+    | non-local environment. Read by HorizonServiceProvider::gate(). Empty
+    | by default — fail closed.
+    |
+    */
+
+    'admins' => env('HORIZON_ADMINS', ''),
+
+    /*
+    |--------------------------------------------------------------------------
     | Queue Wait Time Thresholds
     |--------------------------------------------------------------------------
     |

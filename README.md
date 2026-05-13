@@ -149,7 +149,7 @@ QUEUE_CONNECTION=redis
 php artisan horizon
 ```
 
-The dashboard is at **`/horizon`**. In `APP_ENV=local` it's open; in any other environment access is gated by the `viewHorizon` Gate defined in `app/Providers/HorizonServiceProvider.php` (current rule: any authenticated user — tighten before production).
+The dashboard is at **`/horizon`**. In `APP_ENV=local` it's open; in any other environment access is gated by the `viewHorizon` Gate in `HorizonServiceProvider`. The gate matches users whose email appears in the `HORIZON_ADMINS` env var (comma-separated). Empty by default — fail closed.
 
 **Named queues** — one supervisor per workload, defined in `config/horizon.php`:
 
