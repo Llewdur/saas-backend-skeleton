@@ -56,6 +56,10 @@
             "@php artisan config:clear --ansi",
             "@php vendor/bin/pest --colors=always"
         ],
+        "coverage": [
+            "@php artisan config:clear --ansi",
+            "@php vendor/bin/pest --colors=always --coverage --min=70 --coverage-html=coverage --coverage-text"
+        ],
         "lint": [
             "@php vendor/bin/pint --test"
         ],
@@ -68,7 +72,7 @@
         "ci": [
             "@lint",
             "@analyse",
-            "@test"
+            "@coverage"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
