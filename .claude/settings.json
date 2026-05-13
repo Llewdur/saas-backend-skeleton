@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git merge-tree *)",
+      "Bash(docker run --rm --user *)",
+      "Bash(./vendor/bin/sail *)",
+      "Bash(php artisan *)",
+      "Bash(php vendor/bin/*)",
+      "Bash(mkdir -p *)",
+      "Bash(touch *)",
+      "Bash(mv *)",
+      "Bash(ln -s *)"
+    ]
+  }
+}
