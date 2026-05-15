@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Modules\Auth\Application\DTOs;
 
+use SensitiveParameter;
+
 final readonly class LoginInput
 {
     public function __construct(
         public string $email,
+        #[SensitiveParameter]
         public string $password,
         public string $deviceName,
     ) {}

@@ -16,7 +16,6 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
-        "larastan/larastan": "^3.9",
         "laravel/pail": "^1.2.5",
         "laravel/pao": "^1.0.6",
         "laravel/pint": "^1.27",
@@ -61,13 +60,15 @@
             "@php vendor/bin/pest --colors=always --coverage --min=70 --coverage-html=coverage --coverage-text"
         ],
         "lint": [
-            "@php vendor/bin/pint --test"
+            "@php vendor/bin/pint --test",
+            "tools/mago lint --fail-on-out-of-sync-baseline"
         ],
         "lint:fix": [
-            "@php vendor/bin/pint"
+            "@php vendor/bin/pint",
+            "tools/mago lint --fix"
         ],
         "analyse": [
-            "@php vendor/bin/phpstan analyse --memory-limit=1G"
+            "tools/mago analyse --fail-on-out-of-sync-baseline"
         ],
         "ci": [
             "@lint",

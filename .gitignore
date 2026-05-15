@@ -29,3 +29,6 @@ Thumbs.db
 # SQLite dev databases
 /database/*.sqlite
 /database/*.sqlite-journal
+
+# Mago binary — downloaded per-environment via tools/install-mago.sh
+/tools/mago

@@ -1,0 +1,32 @@
+# Mago configuration — Carthage Software's PHP toolchain.
+#
+# Replaces PHPStan/Larastan (`mago analyse`) and adds Mago linting
+# (`mago lint`). Pint stays as the auto-formatter for now (pint.json).
+#
+# Hooked into composer scripts: `composer lint` / `composer analyse`.
+
+"php-version" = "8.4"
+
+[source]
+paths = ["app"]
+excludes = [
+    "app/Modules/*/Database/migrations/**",
+    "vendor/**",
+]
+
+[linter]
+# Baselines grandfather pre-existing findings so the tool adopts incrementally.
+# Per CODING_STANDARDS.md §19, baselines must SHRINK, never grow — new code
+# must pass cleanly. CI uses --fail-on-out-of-sync-baseline so PRs that fix
+# a baselined issue without removing it from the baseline also fail.
+baseline = "mago-lint-baseline.toml"
+
+# Cyclomatic complexity threshold — the default flags ResolveTenant (3
+# resolution paths × token-ability check) which is legitimately complex at
+# the boundary. Bump the threshold rather than splitting the function into
+# nominal helpers that obscure the flow.
+[linter.rules.cyclomatic-complexity]
+threshold = 15
+
+[analyzer]
+baseline = "mago-analyse-baseline.toml"

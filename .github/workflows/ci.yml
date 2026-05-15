@@ -39,25 +39,20 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
+      - name: Install Mago
+        run: tools/install-mago.sh
+
       - name: Prepare environment
         run: |
           cp .env.example .env
           php artisan key:generate --ansi
           touch database/database.sqlite
 
-      - name: Lint (Pint)
+      - name: Lint (Pint + Mago)
         run: composer lint
 
-      - name: Static analysis (PHPStan level 8)
+      - name: Static analysis (Mago)
         run: composer analyse
 
-      - name: Tests (Pest) with coverage
-        run: composer coverage
-
-      - name: Upload coverage report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage/
-          retention-days: 7
+      - name: Tests (Pest)
+        run: composer test

@@ -1,0 +1,1675 @@
+variant = "loose"
+
+[[issues]]
+file = "app/Models/User.php"
+code = "non-existent-attribute-class"
+message = 'Attribute class `Illuminate\Database\Eloquent\Attributes\Fillable` not found or could not be autoloaded.'
+count = 1
+
+[[issues]]
+file = "app/Models/User.php"
+code = "non-existent-attribute-class"
+message = 'Attribute class `Illuminate\Database\Eloquent\Attributes\Hidden` not found or could not be autoloaded.'
+count = 1
+
+[[issues]]
+file = "app/Models/User.php"
+code = "non-existent-class-like"
+message = 'Class `App\Models\User` cannot extend unknown type `Authenticatable`'
+count = 1
+
+[[issues]]
+file = "app/Models/User.php"
+code = "non-existent-class-like"
+message = 'Class `App\Models\User` cannot use unknown type `Billable`'
+count = 1
+
+[[issues]]
+file = "app/Models/User.php"
+code = "non-existent-class-like"
+message = 'Class `App\Models\User` cannot use unknown type `HasApiTokens`'
+count = 1
+
+[[issues]]
+file = "app/Models/User.php"
+code = "non-existent-class-like"
+message = 'Class `App\Models\User` cannot use unknown type `HasFactory`'
+count = 1
+
+[[issues]]
+file = "app/Models/User.php"
+code = "non-existent-class-like"
+message = 'Class `App\Models\User` cannot use unknown type `Notifiable`'
+count = 1
+
+[[issues]]
+file = "app/Models/User.php"
+code = "unused-method"
+message = "Method `casts()` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Application/UseCases/ListRecentActivity.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `unknown-ref(Illuminate\Database\Eloquent\Collection)` is incompatible with native return type `unknown-ref(Illuminate\Database\Eloquent\Collection)`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Application/UseCases/ListRecentActivity.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Database\Eloquent\Collection`.'
+count = 2
+
+[[issues]]
+file = "app/Modules/Audit/Application/UseCases/ListRecentActivity.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Spatie\Activitylog\Models\Activity`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Http/Controllers/ListActivityController.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Database\Eloquent\Collection)`).'
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Http/Controllers/ListActivityController.php"
+code = "invalid-property-access"
+message = 'Attempting to access a property on a non-object type (`unknown-ref(Spatie\Activitylog\Models\Activity)`).'
+count = 7
+
+[[issues]]
+file = "app/Modules/Audit/Http/Controllers/ListActivityController.php"
+code = "never-return"
+message = "Cannot return value with type 'never' from this function."
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Http/Controllers/ListActivityController.php"
+code = "non-existent-class"
+message = 'Class `Illuminate\Http\JsonResponse` not found.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Http/Controllers/ListActivityController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\JsonResponse`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Http/Controllers/ListActivityController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Spatie\Activitylog\Models\Activity`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Http/Routes/api.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 2
+
+[[issues]]
+file = "app/Modules/Audit/Http/Routes/api.php"
+code = "non-existent-method"
+message = 'Method `get` does not exist on type `Illuminate\Support\Facades\Route`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Http/Routes/api.php"
+code = "non-existent-method"
+message = 'Method `middleware` does not exist on type `Illuminate\Support\Facades\Route`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Infrastructure/Listeners/StampActivityWithTenant.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Spatie\Activitylog\Models\Activity)`).'
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Infrastructure/Listeners/StampActivityWithTenant.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Spatie\Activitylog\Models\Activity`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Infrastructure/Persistence/EloquentActivityRepository.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `unknown-ref(Illuminate\Database\Eloquent\Collection)` is incompatible with native return type `unknown-ref(Illuminate\Database\Eloquent\Collection)`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Infrastructure/Persistence/EloquentActivityRepository.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 4
+
+[[issues]]
+file = "app/Modules/Audit/Infrastructure/Persistence/EloquentActivityRepository.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Database\Eloquent\Collection`.'
+count = 3
+
+[[issues]]
+file = "app/Modules/Audit/Infrastructure/Persistence/EloquentActivityRepository.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Spatie\Activitylog\Models\Activity`.'
+count = 2
+
+[[issues]]
+file = "app/Modules/Audit/Infrastructure/Persistence/EloquentActivityRepository.php"
+code = "non-existent-method"
+message = 'Method `query` does not exist on type `Spatie\Activitylog\Models\Activity`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/LoginUser.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `App\Modules\Auth\Application\DTOs\LoginResult::__construct`: expected `App\Models\User`, but found `nonnull`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/LoginUser.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #2 of `App\Modules\Auth\Application\DTOs\LoginResult::__construct`: expected `string`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/LoginUser.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 4
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/LoginUser.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 5
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/LoginUser.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`nonnull`)."
+count = 2
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/LoginUser.php"
+code = "mixed-property-access"
+message = "Attempting to access a property on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/LoginUser.php"
+code = "mixed-property-access"
+message = "Attempting to access a property on a non-object type (`nonnull`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/LoginUser.php"
+code = "non-existent-method"
+message = 'Method `check` does not exist on type `Illuminate\Support\Facades\Hash`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/LoginUser.php"
+code = "non-existent-method"
+message = 'Method `query` does not exist on type `App\Models\User`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/RegisterUser.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Contracts\Events\Dispatcher)`).'
+count = 2
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/RegisterUser.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Database\DatabaseManager)`).'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/RegisterUser.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Auth\Application\UseCases\RegisterUser::execute`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/RegisterUser.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Contracts\Events\Dispatcher`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/RegisterUser.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Database\DatabaseManager`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Domain/Events/UserRegistered.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Auth\Domain\Events\UserRegistered` cannot use unknown type `Dispatchable`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LoginController.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `App\Modules\Auth\Application\DTOs\LoginInput::fromArray`: expected `array<string, mixed>`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LoginController.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LoginController.php"
+code = "never-return"
+message = "Cannot return value with type 'never' from this function."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LoginController.php"
+code = "non-existent-class"
+message = 'Class `Illuminate\Http\JsonResponse` not found.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LoginController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\JsonResponse`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LoginController.php"
+code = "non-existent-method"
+message = 'Method `make` does not exist on type `App\Modules\Auth\Http\Resources\UserResource`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LoginController.php"
+code = "non-existent-method"
+message = 'Method `validated` does not exist on type `App\Modules\Auth\Http\Requests\LoginRequest`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LogoutController.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Http\Request)`).'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LogoutController.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LogoutController.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LogoutController.php"
+code = "never-return"
+message = "Cannot return value with type 'never' from this function."
+count = 2
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LogoutController.php"
+code = "non-existent-class"
+message = 'Class `Illuminate\Http\JsonResponse` not found.'
+count = 2
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LogoutController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\JsonResponse`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LogoutController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\Request`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LogoutController.php"
+code = "non-existent-class-like"
+message = 'Class, Interface, or Trait `Laravel\Sanctum\PersonalAccessToken` does not exist.'
+count = 3
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/LogoutController.php"
+code = "non-existent-method"
+message = 'Method `delete` does not exist on type `Laravel\Sanctum\PersonalAccessToken`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/MeController.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Http\Request)`).'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/MeController.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/MeController.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Auth\Http\Controllers\MeController::__invoke`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/MeController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\JsonResponse`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/MeController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\Request`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/MeController.php"
+code = "non-existent-method"
+message = 'Method `make` does not exist on type `App\Modules\Auth\Http\Resources\UserResource`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/RegisterController.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `App\Modules\Auth\Application\DTOs\RegisterUserInput::fromArray`: expected `array<string, mixed>`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/RegisterController.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 2
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/RegisterController.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Auth\Http\Controllers\RegisterController::__invoke`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/RegisterController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\JsonResponse`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/RegisterController.php"
+code = "non-existent-method"
+message = 'Method `make` does not exist on type `App\Modules\Auth\Http\Resources\UserResource`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Controllers/RegisterController.php"
+code = "non-existent-method"
+message = 'Method `validated` does not exist on type `App\Modules\Auth\Http\Requests\RegisterRequest`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Requests/LoginRequest.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Auth\Http\Requests\LoginRequest` cannot extend unknown type `FormRequest`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Requests/RegisterRequest.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Auth\Http\Requests\RegisterRequest` cannot extend unknown type `FormRequest`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Resources/UserResource.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Auth\Http\Resources\UserResource` cannot extend unknown type `JsonResource`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Routes/api.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 6
+
+[[issues]]
+file = "app/Modules/Auth/Http/Routes/api.php"
+code = "non-existent-method"
+message = 'Method `get` does not exist on type `Illuminate\Support\Facades\Route`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Http/Routes/api.php"
+code = "non-existent-method"
+message = 'Method `middleware` does not exist on type `Illuminate\Support\Facades\Route`.'
+count = 2
+
+[[issues]]
+file = "app/Modules/Auth/Http/Routes/api.php"
+code = "non-existent-method"
+message = 'Method `post` does not exist on type `Illuminate\Support\Facades\Route`.'
+count = 3
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "missing-magic-method"
+message = "Access to documented magic property `$email` on a class that cannot handle it."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "missing-magic-method"
+message = "Access to documented magic property `$id` on a class that cannot handle it."
+count = 2
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "missing-magic-method"
+message = "Access to documented magic property `$name` on a class that cannot handle it."
+count = 2
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "missing-magic-method"
+message = "Access to documented magic property `$plan` on a class that cannot handle it."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "missing-magic-method"
+message = "Access to documented magic property `$role` on a class that cannot handle it."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "missing-magic-method"
+message = "Access to documented magic property `$slug` on a class that cannot handle it."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "missing-magic-method"
+message = "Access to documented magic property `$tenant_id` on a class that cannot handle it."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "missing-magic-method"
+message = "Access to documented magic property `$user_id` on a class that cannot handle it."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "non-existent-method"
+message = 'Method `lower` does not exist on type `Illuminate\Support\Str`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "non-existent-method"
+message = 'Method `make` does not exist on type `Illuminate\Support\Facades\Hash`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "non-existent-method"
+message = 'Method `random` does not exist on type `Illuminate\Support\Str`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "non-existent-method"
+message = 'Method `save` does not exist on type `App\Models\User`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "non-existent-method"
+message = 'Method `save` does not exist on type `App\Modules\Tenant\Domain\Models\Membership`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "non-existent-method"
+message = 'Method `save` does not exist on type `App\Modules\Tenant\Domain\Models\Tenant`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Infrastructure/Factories/EloquentTenantOwnerFactory.php"
+code = "non-existent-property"
+message = 'Property `$password` does not exist on class `App\Models\User`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Billing/Http/Controllers/SubscriptionController.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Http\Request)`).'
+count = 1
+
+[[issues]]
+file = "app/Modules/Billing/Http/Controllers/SubscriptionController.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "app/Modules/Billing/Http/Controllers/SubscriptionController.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`nonnull`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Billing/Http/Controllers/SubscriptionController.php"
+code = "never-return"
+message = "Cannot return value with type 'never' from this function."
+count = 3
+
+[[issues]]
+file = "app/Modules/Billing/Http/Controllers/SubscriptionController.php"
+code = "non-existent-class"
+message = 'Class `Illuminate\Http\JsonResponse` not found.'
+count = 3
+
+[[issues]]
+file = "app/Modules/Billing/Http/Controllers/SubscriptionController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\JsonResponse`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Billing/Http/Controllers/SubscriptionController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\Request`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Billing/Http/Controllers/SubscriptionController.php"
+code = "non-existent-class-like"
+message = 'Class, Interface, or Trait `Laravel\Cashier\Subscription` does not exist.'
+count = 5
+
+[[issues]]
+file = "app/Modules/Billing/Http/Routes/api.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 2
+
+[[issues]]
+file = "app/Modules/Billing/Http/Routes/api.php"
+code = "non-existent-method"
+message = 'Method `get` does not exist on type `Illuminate\Support\Facades\Route`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Billing/Http/Routes/api.php"
+code = "non-existent-method"
+message = 'Method `middleware` does not exist on type `Illuminate\Support\Facades\Route`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/DTOs/ProjectInput.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/CreateProject.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Contracts\Events\Dispatcher)`).'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/CreateProject.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Database\DatabaseManager)`).'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/CreateProject.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `App\Modules\Core\Domain\Events\ProjectCreated::__construct`: expected `App\Modules\Core\Domain\Models\Project`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/CreateProject.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/CreateProject.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/CreateProject.php"
+code = "mixed-return-statement"
+message = "Could not infer a precise return type for function `8040138062096649437:580`. Saw type `mixed`."
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/CreateProject.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Core\Application\UseCases\CreateProject::execute`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/CreateProject.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Contracts\Events\Dispatcher`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/CreateProject.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Database\DatabaseManager`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/CreateProject.php"
+code = "non-existent-method"
+message = 'Method `query` does not exist on type `App\Modules\Core\Domain\Models\Project`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/DeleteProject.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Contracts\Events\Dispatcher)`).'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/DeleteProject.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Database\DatabaseManager)`).'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/DeleteProject.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Contracts\Events\Dispatcher`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/DeleteProject.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Database\DatabaseManager`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/DeleteProject.php"
+code = "non-existent-method"
+message = 'Method `delete` does not exist on type `App\Modules\Core\Domain\Models\Project`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/ListProjects.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `unknown-ref(Illuminate\Pagination\CursorPaginator)` is incompatible with native return type `unknown-ref(Illuminate\Pagination\CursorPaginator)`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/ListProjects.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 2
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/ListProjects.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Core\Application\UseCases\ListProjects::execute`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/ListProjects.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Pagination\CursorPaginator`.'
+count = 2
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/ListProjects.php"
+code = "non-existent-method"
+message = 'Method `query` does not exist on type `App\Modules\Core\Domain\Models\Project`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/UpdateProject.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Contracts\Events\Dispatcher)`).'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/UpdateProject.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Database\DatabaseManager)`).'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/UpdateProject.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/UpdateProject.php"
+code = "mixed-return-statement"
+message = "Could not infer a precise return type for function `6762970739265768673:1005`. Saw type `mixed`."
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/UpdateProject.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Core\Application\UseCases\UpdateProject::execute`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/UpdateProject.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Contracts\Events\Dispatcher`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/UpdateProject.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Database\DatabaseManager`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/UpdateProject.php"
+code = "non-existent-method"
+message = 'Method `fill` does not exist on type `App\Modules\Core\Domain\Models\Project`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Application/UseCases/UpdateProject.php"
+code = "non-existent-method"
+message = 'Method `refresh` does not exist on type `App\Modules\Core\Domain\Models\Project`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Database/Factories/ProjectFactory.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Core\Database\Factories\ProjectFactory` cannot extend unknown type `Factory`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Database/Factories/ProjectFactory.php"
+code = "unused-property"
+message = "Property `$model` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Domain/Events/ProjectCreated.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Core\Domain\Events\ProjectCreated` cannot use unknown type `Dispatchable`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Domain/Events/ProjectDeleted.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Core\Domain\Events\ProjectDeleted` cannot use unknown type `Dispatchable`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Domain/Events/ProjectUpdated.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Core\Domain\Events\ProjectUpdated` cannot use unknown type `Dispatchable`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Domain/Models/Project.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Core\Domain\Models\Project` cannot extend unknown type `Model`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Domain/Models/Project.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Core\Domain\Models\Project` cannot use unknown type `HasFactory`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Domain/Models/Project.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Core\Domain\Models\Project` cannot use unknown type `LogsActivity`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Domain/Models/Project.php"
+code = "unused-method"
+message = "Method `newfactory()` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Domain/Models/Project.php"
+code = "unused-property"
+message = "Property `$fillable` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `App\Modules\Core\Application\DTOs\ProjectChanges::fromArray`: expected `array<string, mixed>`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `App\Modules\Core\Application\DTOs\ProjectInput::fromArray`: expected `array<string, mixed>`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 4
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Core\Http\Controllers\ProjectController::index`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Core\Http\Controllers\ProjectController::show`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Core\Http\Controllers\ProjectController::store`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Core\Http\Controllers\ProjectController::update`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "never-return"
+message = "Cannot return value with type 'never' from this function."
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "non-existent-class"
+message = 'Class `Illuminate\Http\JsonResponse` not found.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\JsonResponse`.'
+count = 4
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\Resources\Json\AnonymousResourceCollection`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "non-existent-method"
+message = 'Method `collection` does not exist on type `App\Modules\Core\Http\Resources\ProjectResource`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "non-existent-method"
+message = 'Method `make` does not exist on type `App\Modules\Core\Http\Resources\ProjectResource`.'
+count = 3
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "non-existent-method"
+message = 'Method `validated` does not exist on type `App\Modules\Core\Http\Requests\StoreProjectRequest`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Controllers/ProjectController.php"
+code = "non-existent-method"
+message = 'Method `validated` does not exist on type `App\Modules\Core\Http\Requests\UpdateProjectRequest`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Requests/StoreProjectRequest.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Core\Http\Requests\StoreProjectRequest` cannot extend unknown type `FormRequest`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Requests/UpdateProjectRequest.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Core\Http\Requests\UpdateProjectRequest` cannot extend unknown type `FormRequest`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Resources/ProjectResource.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Core\Http\Resources\ProjectResource` cannot extend unknown type `JsonResource`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Routes/api.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Routes/api.php"
+code = "non-existent-method"
+message = 'Method `apiResource` does not exist on type `Illuminate\Support\Facades\Route`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Core/Http/Routes/api.php"
+code = "non-existent-method"
+message = 'Method `middleware` does not exist on type `Illuminate\Support\Facades\Route`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Database/Factories/WebhookFactory.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Integrations\Database\Factories\WebhookFactory` cannot extend unknown type `Factory`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Database/Factories/WebhookFactory.php"
+code = "unused-property"
+message = "Property `$model` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Domain/Models/Webhook.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Integrations\Domain\Models\Webhook` cannot extend unknown type `Model`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Domain/Models/Webhook.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Integrations\Domain\Models\Webhook` cannot use unknown type `HasFactory`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Domain/Models/Webhook.php"
+code = "unused-method"
+message = "Method `newfactory()` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Domain/Models/Webhook.php"
+code = "unused-property"
+message = "Property `$casts` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Domain/Models/Webhook.php"
+code = "unused-property"
+message = "Property `$fillable` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Infrastructure/Http/UrlGuard.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "app/Modules/Integrations/Infrastructure/Jobs/DispatchOutboundWebhook.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Integrations\Infrastructure\Jobs\DispatchOutboundWebhook` cannot implement unknown type `ShouldBeUnique`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Infrastructure/Jobs/DispatchOutboundWebhook.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Integrations\Infrastructure\Jobs\DispatchOutboundWebhook` cannot implement unknown type `ShouldQueue`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Infrastructure/Jobs/DispatchOutboundWebhook.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Integrations\Infrastructure\Jobs\DispatchOutboundWebhook` cannot use unknown type `Queueable`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Infrastructure/Jobs/DispatchOutboundWebhook.php"
+code = "unused-method"
+message = "Method `buildresolvedirective()` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Infrastructure/Jobs/DispatchOutboundWebhook.php"
+code = "unused-property"
+message = "Property `$deliveryId` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Infrastructure/Jobs/DispatchOutboundWebhook.php"
+code = "unused-property"
+message = "Property `$event` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Infrastructure/Jobs/DispatchOutboundWebhook.php"
+code = "unused-property"
+message = "Property `$payload` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Infrastructure/Jobs/DispatchOutboundWebhook.php"
+code = "unused-property"
+message = "Property `$webhookId` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Infrastructure/Listeners/FanOutProjectCreated.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Integrations\Infrastructure\Listeners\FanOutProjectCreated` cannot implement unknown type `ShouldQueueAfterCommit`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Database/Factories/MembershipFactory.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Tenant\Database\Factories\MembershipFactory` cannot extend unknown type `Factory`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Database/Factories/MembershipFactory.php"
+code = "unused-property"
+message = "Property `$model` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Database/Factories/TenantFactory.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Tenant\Database\Factories\TenantFactory` cannot extend unknown type `Factory`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Database/Factories/TenantFactory.php"
+code = "unused-property"
+message = "Property `$model` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `unknown-ref(Illuminate\Database\Eloquent\Relations\BelongsTo)` is incompatible with native return type `unknown-ref(Illuminate\Database\Eloquent\Relations\BelongsTo)`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Database\Eloquent\Builder)`).'
+count = 2
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Database\Eloquent\Model)`).'
+count = 5
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 5
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "mixed-operand"
+message = "Invalid left operand: type `mixed` cannot be reliably used in string concatenation."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Tenant\Domain\Concerns\BelongsToTenant::tenant`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Database\Eloquent\Builder`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Database\Eloquent\Model`.'
+count = 2
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Database\Eloquent\Relations\BelongsTo`.'
+count = 2
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `App\Modules\Tenant\Domain\Concerns\app` (also tried as `app` in a broader scope).'
+count = 2
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "non-existent-method"
+message = 'Method `addGlobalScope` does not exist on type `App\Modules\Tenant\Domain\Concerns\BelongsToTenant`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "non-existent-method"
+message = 'Method `belongsto` does not exist on type `App\Modules\Tenant\Domain\Concerns\BelongsToTenant`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "non-existent-method"
+message = 'Method `creating` does not exist on type `App\Modules\Tenant\Domain\Concerns\BelongsToTenant`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "non-existent-method"
+message = 'Method `updating` does not exist on type `App\Modules\Tenant\Domain\Concerns\BelongsToTenant`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Events/TenantCreated.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Tenant\Domain\Events\TenantCreated` cannot use unknown type `Dispatchable`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Models/Membership.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Tenant\Domain\Models\Membership` cannot extend unknown type `Model`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Models/Membership.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Tenant\Domain\Models\Membership` cannot use unknown type `HasFactory`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Models/Membership.php"
+code = "unused-method"
+message = "Method `newfactory()` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Models/Membership.php"
+code = "unused-property"
+message = "Property `$casts` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Models/Membership.php"
+code = "unused-property"
+message = "Property `$fillable` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Models/Tenant.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Tenant\Domain\Models\Tenant` cannot extend unknown type `Model`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Models/Tenant.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Tenant\Domain\Models\Tenant` cannot use unknown type `HasFactory`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Models/Tenant.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Tenant\Domain\Models\Tenant` cannot use unknown type `LogsActivity`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Models/Tenant.php"
+code = "unused-method"
+message = "Method `newfactory()` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Models/Tenant.php"
+code = "unused-property"
+message = "Property `$casts` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Models/Tenant.php"
+code = "unused-property"
+message = "Property `$fillable` is never used."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/TenantContext.php"
+code = "missing-magic-method"
+message = "Access to documented magic property `$id` on a class that cannot handle it."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/ValueObjects/Slug.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `App\Modules\Tenant\Domain\ValueObjects\Slug::__construct`: expected `string`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/ValueObjects/Slug.php"
+code = "non-existent-method"
+message = 'Method `slug` does not exist on type `Illuminate\Support\Str`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/EnsureTenantContext.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Tenant\Http\Middleware\EnsureTenantContext::handle`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/EnsureTenantContext.php"
+code = "never-return"
+message = "Cannot return value with type 'never' from this function."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/EnsureTenantContext.php"
+code = "non-existent-class"
+message = 'Class `Illuminate\Http\JsonResponse` not found.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/EnsureTenantContext.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\Request`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/EnsureTenantContext.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Symfony\Component\HttpFoundation\Response`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "ambiguous-object-method-access"
+message = "Cannot statically verify method call on a generic `object` type."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Http\Request)`).'
+count = 3
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "mixed-argument"
+message = "Invalid argument type for argument #1 of `method_exists`: expected `class-string|object`, but found `nonnull`."
+count = 3
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 6
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 7
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`nonnull`)."
+count = 3
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "mixed-operand"
+message = "Right operand in `||` operation has `mixed` type."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "mixed-property-access"
+message = "Attempting to access a property on a non-object type (`mixed`)."
+count = 2
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "mixed-property-access"
+message = "Attempting to access a property on a non-object type (`nonnull`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Tenant\Http\Middleware\ResolveTenant::handle`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Tenant\Http\Middleware\ResolveTenant::resolveFromHeader`. Saw type `nonnull`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Tenant\Http\Middleware\ResolveTenant::resolveFromUser`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\Request`.'
+count = 3
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Symfony\Component\HttpFoundation\Response`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "non-existent-method"
+message = 'Method `query` does not exist on type `App\Modules\Tenant\Domain\Models\Tenant`.'
+count = 2
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/ListMembers.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `unknown-ref(Illuminate\Database\Eloquent\Collection)` is incompatible with native return type `unknown-ref(Illuminate\Database\Eloquent\Collection)`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/ListMembers.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 3
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/ListMembers.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Database\Eloquent\Collection`.'
+count = 3
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/ListMembers.php"
+code = "non-existent-method"
+message = 'Method `query` does not exist on type `App\Modules\Tenant\Domain\Models\Membership`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/UpdateMemberRole.php"
+code = "missing-magic-method"
+message = "Access to documented magic property `$id` on a class that cannot handle it."
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/UpdateMemberRole.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/UpdateMemberRole.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 7
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/UpdateMemberRole.php"
+code = "mixed-property-access"
+message = "Attempting to access a property on a non-object type (`mixed`)."
+count = 3
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/UpdateMemberRole.php"
+code = "mixed-property-access"
+message = "Attempting to access a property on a non-object type (`nonnull`)."
+count = 2
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/UpdateMemberRole.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Users\Application\UseCases\UpdateMemberRole::execute`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/UpdateMemberRole.php"
+code = "non-existent-method"
+message = 'Method `query` does not exist on type `App\Modules\Tenant\Domain\Models\Membership`.'
+count = 2
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/UpdateProfile.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/UpdateProfile.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Users\Application\UseCases\UpdateProfile::execute`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/UpdateProfile.php"
+code = "non-existent-method"
+message = 'Method `fill` does not exist on type `App\Models\User`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/UpdateProfile.php"
+code = "non-existent-method"
+message = 'Method `refresh` does not exist on type `App\Models\User`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/ListMembersController.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Users\Http\Controllers\ListMembersController::__invoke`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/ListMembersController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\Resources\Json\AnonymousResourceCollection`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/ListMembersController.php"
+code = "non-existent-method"
+message = 'Method `collection` does not exist on type `App\Modules\Users\Http\Resources\MemberResource`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateMemberRoleController.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #2 of `App\Modules\Users\Application\DTOs\UpdateMemberRoleInput::fromArray`: expected `array<string, mixed>`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateMemberRoleController.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateMemberRoleController.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Users\Http\Controllers\UpdateMemberRoleController::__invoke`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateMemberRoleController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\JsonResponse`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateMemberRoleController.php"
+code = "non-existent-method"
+message = 'Method `make` does not exist on type `App\Modules\Users\Http\Resources\MemberResource`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateMemberRoleController.php"
+code = "non-existent-method"
+message = 'Method `user` does not exist on type `App\Modules\Users\Http\Requests\UpdateMemberRoleRequest`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateMemberRoleController.php"
+code = "non-existent-method"
+message = 'Method `validated` does not exist on type `App\Modules\Users\Http\Requests\UpdateMemberRoleRequest`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateProfileController.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `App\Modules\Users\Application\DTOs\UpdateProfileInput::fromArray`: expected `array<string, mixed>`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateProfileController.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateProfileController.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `App\Modules\Users\Http\Controllers\UpdateProfileController::__invoke`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateProfileController.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Http\JsonResponse`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateProfileController.php"
+code = "non-existent-method"
+message = 'Method `make` does not exist on type `App\Modules\Auth\Http\Resources\UserResource`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateProfileController.php"
+code = "non-existent-method"
+message = 'Method `user` does not exist on type `App\Modules\Users\Http\Requests\UpdateProfileRequest`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Controllers/UpdateProfileController.php"
+code = "non-existent-method"
+message = 'Method `validated` does not exist on type `App\Modules\Users\Http\Requests\UpdateProfileRequest`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Requests/UpdateMemberRoleRequest.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Users\Http\Requests\UpdateMemberRoleRequest` cannot extend unknown type `FormRequest`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Requests/UpdateProfileRequest.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Users\Http\Requests\UpdateProfileRequest` cannot extend unknown type `FormRequest`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Resources/MemberResource.php"
+code = "non-existent-class-like"
+message = 'Class `App\Modules\Users\Http\Resources\MemberResource` cannot extend unknown type `JsonResource`'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Routes/api.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 5
+
+[[issues]]
+file = "app/Modules/Users/Http/Routes/api.php"
+code = "non-existent-method"
+message = 'Method `get` does not exist on type `Illuminate\Support\Facades\Route`.'
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Routes/api.php"
+code = "non-existent-method"
+message = 'Method `middleware` does not exist on type `Illuminate\Support\Facades\Route`.'
+count = 2
+
+[[issues]]
+file = "app/Modules/Users/Http/Routes/api.php"
+code = "non-existent-method"
+message = 'Method `patch` does not exist on type `Illuminate\Support\Facades\Route`.'
+count = 2
+
+[[issues]]
+file = "app/Providers/AppServiceProvider.php"
+code = "non-existent-class-like"
+message = 'Class `App\Providers\AppServiceProvider` cannot extend unknown type `ServiceProvider`'
+count = 1
+
+[[issues]]
+file = "app/Support/ModuleServiceProvider.php"
+code = "non-existent-class-like"
+message = 'Class `App\Support\ModuleServiceProvider` cannot extend unknown type `ServiceProvider`'
+count = 1
+
+[[issues]]
+file = "app/Support/ModuleServiceProvider.php"
+code = "unused-method"
+message = "Method `loadroutesifpresent()` is never used."
+count = 1
+
+[[issues]]
+file = "app/Support/ModuleServiceProvider.php"
+code = "unused-method"
+message = "Method `registerlisteners()` is never used."
+count = 1

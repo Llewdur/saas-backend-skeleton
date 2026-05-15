@@ -1,0 +1,109 @@
+variant = "loose"
+
+[[issues]]
+file = "app/Models/User.php"
+code = "no-literal-password"
+message = "Literal passwords or sensitive data should not be stored in code."
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/AuditModuleServiceProvider.php"
+code = "prefer-static-closure"
+message = "This closure does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Http/Controllers/ListActivityController.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "app/Modules/Audit/Infrastructure/Persistence/EloquentActivityRepository.php"
+code = "inline-variable-return"
+message = "Variable assignment can be inlined into the return statement."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/Application/UseCases/LoginUser.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "app/Modules/Auth/AuthModuleServiceProvider.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Domain/Models/Webhook.php"
+code = "no-literal-password"
+message = "Literal passwords or sensitive data should not be stored in code."
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Infrastructure/Http/UrlGuard.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 1
+
+[[issues]]
+file = "app/Modules/Integrations/Infrastructure/Listeners/FanOutProjectCreated.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Database/Factories/MembershipFactory.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Database/Factories/TenantFactory.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/Domain/Concerns/BelongsToTenant.php"
+code = "prefer-static-closure"
+message = "This closure does not use `$this` and should be declared static."
+count = 3
+
+[[issues]]
+file = "app/Modules/Tenant/Http/Middleware/ResolveTenant.php"
+code = "cyclomatic-complexity"
+message = "Class has high complexity."
+count = 1
+
+[[issues]]
+file = "app/Modules/Tenant/TenantModuleServiceProvider.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/ListMembers.php"
+code = "inline-variable-return"
+message = "Variable assignment can be inlined into the return statement."
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Application/UseCases/UpdateProfile.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "app/Modules/Users/Http/Resources/MemberResource.php"
+code = "literal-named-argument"
+message = "Literal argument `'Membership::user must be eager-loaded before resource serialization.'` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "app/Providers/AppServiceProvider.php"
+code = "no-empty-comment"
+message = "Empty comments are not allowed."
+count = 2

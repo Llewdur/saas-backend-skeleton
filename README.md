@@ -80,7 +80,7 @@ Modules/<Name>/
 | Tenancy model | Single DB, `tenant_id` column | Schema-per-tenant is overkill for this scope; the right call for >95% of SaaS. |
 | Tenancy enforcement | Trait global scope + middleware + base policy | Defense in depth. Three independent layers; the trait makes "forgot to scope" unreachable. |
 | Auth | Sanctum (token-based) | Right tool for SPA + mobile + machine clients. No OAuth-provider features needed. |
-| Static analysis | PHPStan level 8 (Larastan), targeting Mago | Mago is the goal (faster, modern); composer wrapper currently broken upstream. Rules in `CODING_STANDARDS.md` §19 apply to both. |
+| Static analysis | Mago analyser + linter | Rust-based, faster than PHPStan and emits security-aware lint rules (`sensitive-parameter`, `no-error-control-operator`). Binary installed via `tools/install-mago.sh`. Baselines grandfather pre-existing findings; new code must pass cleanly (see `CODING_STANDARDS.md` §19). |
 | Formatting | Laravel Pint with `declare(strict_types)` enforced | One opinionated config; CI fails on deviation. |
 | Tests | Pest 4 | Reads better in PRs; same assertion library underneath. |
 | DB (dev) | SQLite | Zero-setup `clone && run`. Reviewer doesn't need a database server. |
@@ -223,9 +223,9 @@ calls `withoutGlobalScopes()`, write the policy *then*.
 - The cross-tenant isolation suite is `tests/Feature/ProjectsTest.php` and `tests/Feature/TenantIsolationTest.php` — the most important test files in the repo.
 - Line coverage is gated at **70%** in CI (`composer coverage`), with pcov as the driver. The HTML report is uploaded as a workflow artifact (7-day retention) for drill-down.
 - CI (`.github/workflows/ci.yml`) runs on every push and PR:
-  - `composer lint` — Pint --test
-  - `composer analyse` — PHPStan level 8
-  - `composer coverage` — full Pest suite with `--min=70`
+  - `composer lint` — Pint --test + `mago lint --fail-on-out-of-sync-baseline`
+  - `composer analyse` — `mago analyse --fail-on-out-of-sync-baseline`
+  - `composer test` — full Pest suite (coverage gate disabled, tracked in #10)
 - Two additional workflows run on PRs:
   - `.github/workflows/claude-code-review.yml` — automatic PR review by Claude, scoped to this project's invariants (multi-tenant isolation, coding standards). Needs `CLAUDE_CODE_OAUTH_TOKEN` in repo secrets.
   - `.github/workflows/claude.yml` — `@claude` mentions in issues / PR comments / PR reviews.
